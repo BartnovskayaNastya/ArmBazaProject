@@ -1,0 +1,47 @@
+﻿<Window x:Class="ArmBazaProject.MemberWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArmBazaProject"
+        mc:Ignorable="d"
+        Title="MemberWindow" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition  />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Вес" />
+        <TextBlock Text="Пол" Grid.Row="1"/>
+        <TextBlock  Text="ФИО" Grid.Row="2" />
+        <TextBlock Text="Квалификация" Grid.Row="3" />
+        <TextBlock Text="Дата Рождения" Grid.Row="4" />
+        <!--<TextBlock Text="Область" Grid.Row="5" />-->
+        <TextBlock Text="Команда" Grid.Row="5" />
+        <!--<TextBlock Text="Тренер" Grid.Row="6" />-->
+
+        <TextBox Text="{Binding Weight}" Grid.Column="1"/>
+        <ComboBox Name="genderCB" Grid.Column="1" Grid.Row="1" />
+        <TextBox Text="{Binding FullName}" Grid.Column="1" Grid.Row="2" />
+        <ComboBox Name="QualificationCB" Grid.Column="1" Grid.Row="3" DisplayMemberPath="Name" SelectedValue="{Binding QualificationId, Mode=TwoWay}" 
+          SelectedValuePath="Id" />
+        <DatePicker Grid.Column="1" Grid.Row="4"  SelectedDate="{Binding DateOfBirth}" BorderThickness="0" />
+        <ComboBox Name="teamCB" Grid.Column="1" Grid.Row="5" DisplayMemberPath="Name" SelectedValue="{Binding TeamId, Mode=TwoWay}" 
+          SelectedValuePath="Id"/>
+        <!--<TextBox Text="{Binding Team.TrainerName}" Grid.Column="1" Grid.Row="6"/>-->
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
+            <Button IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="5">OK</Button>
+            <Button IsCancel="True" MinWidth="60" Margin="5">Отмена</Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,35 @@
+﻿<Window x:Class="ArmBazaProject.windows.TeamWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArmBazaProject.windows"
+        mc:Ignorable="d"
+        Title="TeamWindow" Height="250" Width="432.79">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Название команды" />
+        <TextBlock Text="ФИО тренера" Grid.Row="1" />
+        <TextBlock Text="Регион" Grid.Row="2" />
+
+        <TextBox Text="{Binding Name}" Grid.Column="1"  />
+        <TextBox Text="{Binding TrainerName}" Grid.Row="1" Grid.Column="2"  />
+        <ComboBox Name="regionCB" Grid.Column="2" Grid.Row="2" DisplayMemberPath="Name" SelectedValue="{Binding RegionId, Mode=TwoWay}" 
+          SelectedValuePath="Id"/>
+
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
+            <Button IsDefault="True" Click="Accept_ClickTeam" MinWidth="60" Margin="5">OK</Button>
+            <Button IsCancel="True" MinWidth="60" Margin="5">Отмена</Button>
+        </StackPanel>
+    </Grid>
+</Window>

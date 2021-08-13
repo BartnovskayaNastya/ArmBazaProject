@@ -1,0 +1,505 @@
+﻿<Window x:Class="ArmBazaProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:ArmBazaProject" xmlns:local1="clr-namespace:ArmBazaProject.UserControlWindows"
+        mc:Ignorable="d"
+        FontSize="18"
+        FontStyle="Normal"
+        Title="ArmProject"
+        WindowState="Maximized" Height="1488.18"
+        >
+
+    <Window.Resources>
+        <AlternationConverter x:Key="altconvBackground">
+            <SolidColorBrush Color="#FF161A1D"/>
+            <SolidColorBrush Color="White"/>
+        </AlternationConverter>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FFEDB5C0"></Setter>
+            <Setter Property="Margin" Value="1,2,1,2"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid Background="#FF28263C">
+
+        <TabControl Background="#FF28263C"  FontFamily="Calibri">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#FF9AA5C3" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="#FF99CED2" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Background="#FF9791A0" Header="Работа с БД">
+                <TabControl Background="#FF9AA5C3">
+                    <TabItem  Header="Участники соревнований">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="650"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <ScrollViewer x:Name="sv" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                    <ListView FontFamily="Calibri" Grid.Row="0"  Name="competitorList" ItemsSource="{Binding}" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Weight}" />
+                                                    <TextBlock Text="{Binding Gender}" />
+                                                    <TextBlock Text="{Binding FullName}"/>
+                                                    <TextBlock Text="{Binding Qualification.Name}"  />
+                                                    <TextBlock Text="{Binding DateOfBirth}" />
+                                                    <TextBlock Text="{Binding Team.Region.Name}" />
+                                                    <TextBlock Text="{Binding Team.Name}"  />
+                                                    <TextBlock Text="{Binding Team.TrainerName}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </ScrollViewer>
+                                <StackPanel Height="50" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button FontFamily="Calibri" Content="Добавить" Margin="10" Click="AddMember_Click" />
+                                    <Button FontFamily="Calibri" Content="Изменить" Margin="10" Click="EditMember_Click"  />
+                                    <Button FontFamily="Calibri" Content="Удалить" Margin="10" Click="DeleteMember_Click"  />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="550"/>
+                                    <RowDefinition Height="100"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="Введите имя участника" Height="30" Margin="0,0,0,75"/>
+                                    <TextBox FontFamily="Calibri" x:Name="searchDB"  Width="300" Height="40"/>
+
+                                    <Border CornerRadius="200">
+                                        <Button  FontFamily="Calibri" Content="Найти" Width="100" Height="30" Margin="10" Click="findInDBButton_Click2"/>
+                                    </Border>
+                                    <Button FontFamily="Calibri" Content="Сброс" Width="100" Height="30" Margin="10" Click="resetButton_Click2"/>
+                                </StackPanel>
+                                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                    <ListView Name="DBList" Grid.Row="0"  ItemsSource="{Binding}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Member.Weight}" />
+                                                    <TextBlock Text="{Binding Member.Gender}" />
+                                                    <TextBlock Text="{Binding Member.FullName}"/>
+                                                    <TextBlock Text="{Binding QualificationNameDB}"  />
+                                                    <TextBlock Text="{Binding Member.DateOfBirth}" />
+                                                    <TextBlock Text="{Binding RegionNameDB}" />
+                                                    <TextBlock Text="{Binding TeamNameDB}"  />
+                                                    <TextBlock Text="{Binding TrainerNameDB}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </ScrollViewer>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Команды" FontFamily="Calibri">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="350"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel" >
+                                <ListBox FontFamily="Calibri" Grid.Row="0"  Name="teamsList" ItemsSource="{Binding}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Name }" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                            <StackPanel Height="50" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button  FontFamily="Calibri" Content="Добавить" Margin="10" Click="AddTeam_Click" />
+                                <Button FontFamily="Calibri" Content="Изменить" Margin="10" Click="EditTeam_Click"  />
+                                <Button FontFamily="Calibri" Content="Удалить" Margin="10" Click="DeleteTeam_Click"  />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <!--<TabItem Header="Соревнования"></TabItem>
+                    <TabItem Header="Результаты"></TabItem>-->
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Ведение соревнования">
+                <TabControl>
+                    <TabItem Header="Параметры">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontFamily="Calibri" Margin="20" Text="Выберите возрастную категорию:"/>
+                            <ComboBox Grid.Column="1" Name="ageCategoryCB" DisplayMemberPath="Name" ItemsSource="{Binding}"/>
+                            <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                <DataGrid Name="categoriesGrid" PreviewKeyDown="dg_KeyDown"  SelectedItem="{Binding SelectedMember}" AutoGenerateColumns="False" ItemsSource="{Binding}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header = "Женщины" Binding="{Binding Weight}"/>
+                                        <DataGridTextColumn  Header ="Мужчины" Binding="{Binding Weight}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </ScrollViewer>
+                            <TextBlock Grid.Row="1" Margin="20" Text="Выберите очки:"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1"  Name="pointsCB" ItemsSource="{Binding}" SelectionChanged="pointsCB_SelectionChanged"></ComboBox>
+                            <ScrollViewer Grid.Row="1" Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                <ListView Name="pointsGrid" ItemsSource="{Binding}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Member.Weight}" />
+                                                <TextBlock Text="{Binding Member.Gender}" />
+                                                <TextBlock Text="{Binding Member.FullName}"/>
+                                                <TextBlock Text="{Binding QualificationNameDB}"  />
+                                                <TextBlock Text="{Binding Member.DateOfBirth}" />
+                                                <TextBlock Text="{Binding RegionNameDB}" />
+                                                <TextBlock Text="{Binding TeamNameDB}"  />
+                                                <TextBlock Text="{Binding TrainerNameDB}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ScrollViewer>
+                            <TextBlock Grid.Row="2" Margin="20" Text="Название соревнования:"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Name="competitionName"/>
+                            <TextBlock Grid.Row="3" Margin="20" Text="Место проведения соревнования:"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Name="competitionLocation"/>
+                            <TextBlock Grid.Row="4" Margin="20" Text="Дата проведения соревнования:"/>
+                            <DatePicker Grid.Row="4" Grid.Column="1"  Name="competitionDate"/>
+                            <TextBlock Grid.Row="5" Margin="20" Text="Секретари:"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" x:Name="secr"/>
+                            <TextBlock Grid.Row="6" Margin="20" Text="Судьи:"/>
+                            <TextBox Grid.Row="6" Grid.Column="1" x:Name="judges"/>
+                            <Button Grid.Row="7" Grid.ColumnSpan="3"  HorizontalAlignment="Center"  Margin="20" Content="Сохранить параметры" Height="30" x:Name="saveParametrsCompetition" Click="saveParametrsCompetition_Click"/>
+                        </Grid>
+                        
+                    </TabItem>
+                    <TabItem Header="Добавление участников">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <DataGrid PreviewKeyDown="dg_KeyDown"  SelectedItem="{Binding SelectedMember}" CellEditEnding="cellEditEnding" Name="membersGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="membersGrid_SelectionChanged">
+                                    <DataGrid.Columns>
+                                        <DataGridComboBoxColumn 
+                                Header = "Пол" 
+                                x:Name="GenderComboBox" 
+                                SelectedValueBinding="{Binding Member.Gender, Mode=TwoWay}"
+                                DisplayMemberPath="{Binding Member.Gender}" />
+                                        <DataGridTextColumn  Header ="Вес" Binding="{Binding Member.Weight}" />
+                                        <!--<DataGridTextColumn 
+                                Width="120" 
+                                Header ="Весовая категория" 
+                                Binding="{Binding Member.WeightCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
+                                        <DataGridTextColumn 
+                                Header ="Имя" 
+                                Binding="{Binding Member.FullName}" />
+                                        <DataGridComboBoxColumn 
+                                Header = "Квалификация" 
+                                x:Name="QualificationComboBox"
+                                DisplayMemberPath="{Binding QualificationName}"
+                                SelectedItemBinding="{Binding QualificationName, Mode=TwoWay}"
+                               />
+                                        <DataGridTemplateColumn Header="Дата рождения">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <DatePicker SelectedDate="{Binding Member.DateOfBirth}" BorderThickness="0" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridComboBoxColumn 
+                                Header = "Область" 
+                                x:Name="RegionComboBoxz"
+                                DisplayMemberPath="{Binding RegionName}"
+                                 SelectedItemBinding="{Binding RegionName}"/>
+                                        <DataGridComboBoxColumn 
+                                Header = "Команда" 
+                                x:Name="TeamComboBox"
+                                 SelectedItemBinding="{Binding TeamName}"
+                                DisplayMemberPath="{Binding TeamName}"/>
+                                        <DataGridTextColumn Width="130" Header ="Тренер" Binding="{Binding TrainerName}"/>
+                                        <DataGridComboBoxColumn 
+                                Header = "Рука" 
+                                x:Name="HandComboBox" 
+                                SelectedValueBinding="{Binding Hand, Mode=TwoWay}"
+                                DisplayMemberPath="{Binding Hand}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="Введите имя участника:" />
+                                    <TextBox x:Name="searchePanel" Height="30" Width="200"/>
+                                    <Button x:Name="findInDBButton" Content="Найти" Width="100" Height="30" Margin="10" Click="findInDBButton_Click"/>
+                                </StackPanel>
+                                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                    <ListView Grid.Row="0"  Name="bdMembersList" ItemsSource="{Binding}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Member.Weight}" />
+                                                    <TextBlock Text="{Binding Member.Gender}" />
+                                                    <TextBlock Text="{Binding Member.FullName}"/>
+                                                    <TextBlock Text="{Binding QualificationNameDB}"  />
+                                                    <TextBlock Text="{Binding Member.DateOfBirth}" />
+                                                    <TextBlock Text="{Binding RegionNameDB}" />
+                                                    <TextBlock Text="{Binding TeamNameDB}"  />
+                                                    <TextBlock Text="{Binding TrainerNameDB}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </ScrollViewer>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+                                    <Button x:Name="addMemberButton" Content="Добавить" Width="100" Height="30" Margin="10" Click="addMemberButton_Click"/>
+                                    <Button x:Name="resetButton" Content="Сброс" Width="100" Height="30" Margin="10" Click="resetButton_Click"/>
+
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <!--<TabItem Header="Информация">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" x:Name="stackPanel">
+                                <Button x:Name="startButton" Content="Информация об участниках" Click="Button_Click"  />
+                            </StackPanel>
+                            <TabControl Grid.Row="1">
+                                <TabItem Header="М">
+                                    <TabControl ItemsSource="{Binding}" x:Name="tabControlBoys" >
+                                        <TabControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding Category.CategoryWeight}">
+                                                </Label>
+                                            </DataTemplate>
+                                        </TabControl.ItemTemplate>
+                                        <TabControl.ContentTemplate>
+                                            <DataTemplate>
+                                                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                                    <ListView ItemsSource="{Binding Members, UpdateSourceTrigger=PropertyChanged}">
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    --><!--  добавить новые поля!--><!--
+                                                                    <TextBlock Text="{Binding Member.Weight}" />
+                                                                    <TextBlock Text="{Binding Member.Gender}" />
+                                                                    <TextBlock Text="{Binding Member.FullName}"/>
+                                                                    <TextBlock Text="{Binding  QualificationName}"  />
+                                                                    <TextBlock Text="{Binding Member.DateOfBirth}" />
+                                                                    <TextBlock Text="{Binding RegionName}" />
+                                                                    <TextBlock Text="{Binding TeamName}"  />
+                                                                    <TextBlock Text="{Binding TrainerName}" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+
+                                                        </ListView.ItemTemplate>
+                                                    </ListView>
+                                                </ScrollViewer>
+                                            </DataTemplate>
+                                        </TabControl.ContentTemplate>
+                                    </TabControl>
+                                </TabItem>
+                                <TabItem Header="Ж">
+                                    <TabControl  Name="tabControlGirls" >
+                                        <TabControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding Category.CategoryWeight}">
+                                                </Label>
+                                            </DataTemplate>
+                                        </TabControl.ItemTemplate>
+                                        <TabControl.ContentTemplate>
+                                            <DataTemplate>
+                                                <ListView ItemsSource="{Binding Members}">
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <TextBlock Text="{Binding Member.Weight}" />
+                                                                <TextBlock Text="{Binding Member.Gender}" />
+                                                                <TextBlock Text="{Binding Member.FullName}"/>
+                                                                <TextBlock Text="{Binding QualificationName}"  />
+                                                                <TextBlock Text="{Binding Member.DateOfBirth}" />
+                                                                <TextBlock Text="{Binding RegionName}" />
+                                                                <TextBlock Text="{Binding TeamName}"  />
+                                                                <TextBlock Text="{Binding TrainerName}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+                                            </DataTemplate>
+                                        </TabControl.ContentTemplate>
+                                    </TabControl>
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                    </TabItem>-->
+                    <TabItem Header="Турнирные таблицы">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Button HorizontalAlignment="Left" Content="Обновить данные" Click="Button_Click_1"></Button>
+                            <TabControl Grid.Row="1">
+                                <TabItem Header="Мужчины-Левая">
+                                    <local:TabItemTemplate x:Name="TabBoysLeftHand" DataContext="{Binding}"></local:TabItemTemplate>
+
+                                </TabItem>
+                                <TabItem Header="Мужчины-Правая">
+                                    <local:TabItemTemplate x:Name="TabBoysRighHand" DataContext="{Binding}"></local:TabItemTemplate>
+                                </TabItem>
+                                <TabItem Header="Женщины-Левая">
+                                    <local:TabItemTemplate x:Name="TabGirlsLeftHand"  DataContext="{Binding}"></local:TabItemTemplate>
+                                </TabItem>
+                                <TabItem Header="Женщины-Правая">
+                                    <local:TabItemTemplate x:Name="TabGirlsRighHand"  DataContext="{Binding}"></local:TabItemTemplate>
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Результаты">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Button HorizontalAlignment="Left" Content="Посчитать очки" Click="getResultsButton_Click"></Button>
+                            <TabControl Grid.Row="1">
+                                <TabItem Header="Мужчины-Левая">
+                                    <local1:ResultTemplate x:Name="TabResultBL"  DataContext="{Binding}"></local1:ResultTemplate>
+                                </TabItem>
+                                <TabItem Header="Мужчины-Правая">
+                                    <local1:ResultTemplate x:Name="TabResultBR"  DataContext="{Binding}"></local1:ResultTemplate>
+                                </TabItem>
+                                <TabItem Header="Женщины-Левая">
+                                    <local1:ResultTemplate x:Name="TabResultGL"  DataContext="{Binding}"></local1:ResultTemplate>
+                                </TabItem>
+                                <TabItem Header="Женщины-Правая">
+                                    <local1:ResultTemplate x:Name="TabResultGR"  DataContext="{Binding}"></local1:ResultTemplate>
+                                </TabItem>
+                                <!--<TabItem Header="Командные">
+                                    <Grid Margin="0, 20, 0, 0" x:Name="ComandScore" DataContext="{Binding}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="Список команд"></TextBlock>
+                                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" >
+                                                <ListView ItemsSource="{Binding AllTeams}">
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel >
+                                                                <TextBlock Text="{Binding Member.FullName}"/>
+                                                                <TextBlock Text="{Binding TeamName}"/>
+                                                                <TextBlock Text="{Binding Member.Weight}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+                                            </ScrollViewer>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Левая рука"></TextBlock>
+                                            <ListView ItemsSource="{Binding PlaceMembers}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Place}" />
+                                                            <TextBlock Text="{Binding Score}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </StackPanel>
+                                    </Grid>
+                                </TabItem>-->
+                            </TabControl>
+                        </Grid>
+
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
