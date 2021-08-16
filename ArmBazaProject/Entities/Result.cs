@@ -13,6 +13,22 @@ namespace ArmBazaProject.Entities
         private ObservableCollection<MemberViewModel> placeMembersLeft;
         private ObservableCollection<MemberViewModel> placeMembersRight;
 
+        private ObservableCollection<MemberViewModel> placeMembersByTwoHands;
+
+
+        public ObservableCollection<MemberViewModel> PlaceMembersByTwoHands
+        {
+            get { return placeMembersByTwoHands; }
+            set
+            {
+                if (placeMembersByTwoHands != value)
+                {
+                    placeMembersByTwoHands = value;
+                    OnPropertyChanged("PlaceMembersByTwoHands");
+                }
+            }
+        }
+
         public ObservableCollection<MemberViewModel> PlaceMembersRight
         {
             get { return placeMembersRight; }

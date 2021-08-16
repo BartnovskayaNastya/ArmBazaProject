@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 namespace ArmBazaProject.UserControlWindows
 {
     /// <summary>
-    /// Логика взаимодействия для ResultTemplate.xaml
+    /// Логика взаимодействия для ResultHandsTableTemplate.xaml
     /// </summary>
-    public partial class ResultTemplate : UserControl
+    public partial class ResultHandsTableTemplate : UserControl
     {
-        public ResultTemplate()
+        public ResultHandsTableTemplate()
         {
             InitializeComponent();
-
-            
-
         }
 
         private void svT_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -39,7 +36,7 @@ namespace ArmBazaProject.UserControlWindows
             {
                 scrollviewer.LineDown();
             }
-
         }
+
     }
 }

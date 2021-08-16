@@ -19,7 +19,7 @@ namespace ArmBazaProject
         public DbSet<Region> Regions { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Category> Categories {get; set;}
-        //public DbSet<Points> Points { get; set; }
+        public DbSet<Points> Points { get; set; }
 
     }
 }

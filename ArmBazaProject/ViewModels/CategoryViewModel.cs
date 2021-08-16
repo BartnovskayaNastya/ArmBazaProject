@@ -20,7 +20,7 @@ namespace ArmBazaProject
         bool isAall = false;
         bool isBall = false;
 
-        private WeightCategory category;
+        private WeightCategory weightCategory;
 
         private ObservableCollection<ToureViewModel> toures;
         ToureViewModel toure;
@@ -53,15 +53,15 @@ namespace ArmBazaProject
         public IDelegateCommand FinalCommandB { protected set; get; }
         public IDelegateCommand SemiFinalCommand { protected set; get; }
 
-        public WeightCategory Category
+        public WeightCategory WeightCategory
         {
-            get { return category; }
+            get { return weightCategory; }
             set
             {
-                if (category != value)
+                if (weightCategory != value)
                 {
-                    category = value;
-                    OnPropertyChanged("Category");
+                    weightCategory = value;
+                    OnPropertyChanged("WeightCategory");
                 }
             }
         }
@@ -78,7 +78,6 @@ namespace ArmBazaProject
                 }
             }
         }
-
 
         public ToureViewModel Final
         {
@@ -147,9 +146,9 @@ namespace ArmBazaProject
 
         #endregion
 
-        public CategoryViewModel(float weight)
+        public CategoryViewModel(float weight, string name)
         {
-            category = new WeightCategory(weight);
+            weightCategory = new WeightCategory(weight, name);
             allMembers = new ObservableCollection<MemberViewModel>();
             placeMembers = new ObservableCollection<MemberViewModel>();
             toures = new ObservableCollection<ToureViewModel>();
@@ -208,7 +207,6 @@ namespace ArmBazaProject
                 allMembers[0].Place = 1;
                 placeMembers.Add((MemberViewModel)allMembers[0].Clone());
             }
-
             else
             {
                 int size;
@@ -217,6 +215,7 @@ namespace ArmBazaProject
                 {
                     firstTourMembers.Add((MemberViewModel)member.Clone());
                 }
+                //если нечетное кол-во участников
                 if (firstTourMembers.Count % 2 > 0)
                 {
                     size = firstTourMembers.Count - 1;
@@ -253,6 +252,7 @@ namespace ArmBazaProject
             {
                 getThreeMembers();
             }
+            // 2 участника
             else if (firstTourMembers.Count == 2)
             {
                 someMember = (MemberViewModel)toure.Toure.ToureMembers[0].Clone();
@@ -274,6 +274,7 @@ namespace ArmBazaProject
                     final.Toure.ToureMembersA.Add(someMember);
                 }
             }
+            //3+ участника
             else
             {
                 toure.SortFirstToure();
@@ -417,9 +418,6 @@ namespace ArmBazaProject
             }
            
         }
-
-      
-
 
         private void ButtonClickToure(ToureViewModel toure)
         {
@@ -591,10 +589,6 @@ namespace ArmBazaProject
                 }
 
             }
-
-
-
-
 
         }
 

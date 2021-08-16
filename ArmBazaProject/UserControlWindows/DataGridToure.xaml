@@ -30,7 +30,6 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <!--<DataGridTextColumn  Header ="Проигрыши" Binding="{Binding LoseCounter}" />-->
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>

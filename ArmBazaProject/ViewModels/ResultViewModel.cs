@@ -12,6 +12,7 @@ namespace ArmBazaProject.ViewModels
     class ResultViewModel : NotifyableObject
     {
         Result result;
+        CompetitionViewModel competition;
 
         #region свойства доступв
       
@@ -28,13 +29,12 @@ namespace ArmBazaProject.ViewModels
             }
         }
 
-        
-
         #endregion
 
-        public ResultViewModel()
+        public ResultViewModel(CompetitionViewModel competition)
         {
             result = new Result();
+            this.competition = competition;
 
         }
 
@@ -60,47 +60,28 @@ namespace ArmBazaProject.ViewModels
             //GetPoints(competitionVM.CompetitionRightHand);
         }
 
-        private void GetPoints(Сompetition competition)
-        {
-            for (int i = 0; i < competition.CategoriesB.Length; i++)
-            {
-                for (int j = 0; j < competition.CategoriesB[i].PlaceMembers.Count; j++)
-                {
-                    for (int k = 0; k < competition.pointsDatas.Count; k++)
-                    {
-                        if (competition.CategoriesB[i].PlaceMembers[j].Place == competition.pointsDatas[k].Place)
-                        {
-                            competition.CategoriesB[i].PlaceMembers[j].Score = competition.pointsDatas[k].Points;
-                            break;
-                        }
-                        else
-                        {
-                            competition.CategoriesB[i].PlaceMembers[j].Score = 1;
-                        }
-                    }
+        //private void GetPoints(Сompetition competition)
+        //{
+        //    for (int i = 0; i < competition.CategoriesB.Length; i++)
+        //    {
+        //        for (int j = 0; j < competition.CategoriesB[i].PlaceMembers.Count; j++)
+        //        {
+        //            for (int k = 0; k < competition.pointsDatas.Count; k++)
+        //            {
+        //                if (competition.CategoriesB[i].PlaceMembers[j].Place == competition.pointsDatas[k].Place)
+        //                {
+        //                    competition.CategoriesB[i].PlaceMembers[j].Score = competition.pointsDatas[k].Points;
+        //                    break;
+        //                }
+        //                else
+        //                {
+        //                    competition.CategoriesB[i].PlaceMembers[j].Score = 1;
+        //                }
+        //            }
 
-                }
-            }
-
-            for (int i = 0; i < competition.CategoriesG.Length; i++)
-            {
-                for (int j = 0; j < competition.CategoriesG[i].PlaceMembers.Count; j++)
-                {
-                    for (int k = 0; k < competition.pointsDatas.Count; k++)
-                    {
-                        if (competition.CategoriesG[i].PlaceMembers[j].Place == competition.pointsDatas[k].Place)
-                        {
-                            competition.CategoriesG[i].PlaceMembers[j].Score = competition.pointsDatas[k].Points;
-                        }
-                        else
-                        {
-                            competition.CategoriesG[i].PlaceMembers[j].Score = 1;
-                        }
-                    }
-
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         public void getAllResults()
         {

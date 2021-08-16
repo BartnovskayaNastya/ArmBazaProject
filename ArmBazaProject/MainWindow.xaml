@@ -170,61 +170,58 @@
                     <TabItem Header="Параметры">
                         <Grid>
                             <Grid.RowDefinitions>
+                                <RowDefinition />
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="300"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock FontFamily="Calibri" Margin="20" Text="Выберите возрастную категорию:"/>
-                            <ComboBox Grid.Column="1" Name="ageCategoryCB" DisplayMemberPath="Name" ItemsSource="{Binding}"/>
+                            <TextBlock Name ="qqq"  FontFamily="Calibri" Text="Выберите возрастную категорию:"/>
+                            <ComboBox Grid.Column="1" Name="ageCategoryCB" ItemsSource="{Binding}" SelectionChanged="ageCategoryCB_SelectionChanged"/>
                             <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
-                                <DataGrid Name="categoriesGrid" PreviewKeyDown="dg_KeyDown"  SelectedItem="{Binding SelectedMember}" AutoGenerateColumns="False" ItemsSource="{Binding}">
+                                <DataGrid Name="categoriesGridGirls" PreviewKeyDown="dg_KeyDown"  AutoGenerateColumns="False" ItemsSource="{Binding}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header = "Женщины" Binding="{Binding Weight}"/>
-                                        <DataGridTextColumn  Header ="Мужчины" Binding="{Binding Weight}"/>
+                                        <DataGridTextColumn Binding="{Binding Weight}" Header = "Женщины" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </ScrollViewer>
+                            <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                <DataGrid Name="categoriesGridBoys" PreviewKeyDown="dg_KeyDown" AutoGenerateColumns="False" ItemsSource="{Binding}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Weight}"  Header ="Мужчины" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </ScrollViewer>
                             <TextBlock Grid.Row="1" Margin="20" Text="Выберите очки:"/>
                             <ComboBox Grid.Row="1" Grid.Column="1"  Name="pointsCB" ItemsSource="{Binding}" SelectionChanged="pointsCB_SelectionChanged"></ComboBox>
-                            <ScrollViewer Grid.Row="1" Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
-                                <ListView Name="pointsGrid" ItemsSource="{Binding}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Member.Weight}" />
-                                                <TextBlock Text="{Binding Member.Gender}" />
-                                                <TextBlock Text="{Binding Member.FullName}"/>
-                                                <TextBlock Text="{Binding QualificationNameDB}"  />
-                                                <TextBlock Text="{Binding Member.DateOfBirth}" />
-                                                <TextBlock Text="{Binding RegionNameDB}" />
-                                                <TextBlock Text="{Binding TeamNameDB}"  />
-                                                <TextBlock Text="{Binding TrainerNameDB}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
+                            <ScrollViewer Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="sv_PreviewMouseWheel">
+                                <DataGrid Name="pointsGrid" PreviewKeyDown="dg_KeyDown" AutoGenerateColumns="False" ItemsSource="{Binding}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Place}"  Header ="Место" />
+                                        <DataGridTextColumn Binding="{Binding Score}"  Header ="Очки" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </ScrollViewer>
-                            <TextBlock Grid.Row="2" Margin="20" Text="Название соревнования:"/>
+                            <TextBlock Grid.Row="2" Text="Название соревнования:"/>
                             <TextBox Grid.Row="2" Grid.Column="1" Name="competitionName"/>
-                            <TextBlock Grid.Row="3" Margin="20" Text="Место проведения соревнования:"/>
+                            <TextBlock Grid.Row="3"  Text="Место проведения соревнования:"/>
                             <TextBox Grid.Row="3" Grid.Column="1" Name="competitionLocation"/>
-                            <TextBlock Grid.Row="4" Margin="20" Text="Дата проведения соревнования:"/>
+                            <TextBlock Grid.Row="4"  Text="Дата проведения соревнования:"/>
                             <DatePicker Grid.Row="4" Grid.Column="1"  Name="competitionDate"/>
-                            <TextBlock Grid.Row="5" Margin="20" Text="Секретари:"/>
+                            <TextBlock Grid.Row="5"  Text="Секретари:"/>
                             <TextBox Grid.Row="5" Grid.Column="1" x:Name="secr"/>
-                            <TextBlock Grid.Row="6" Margin="20" Text="Судьи:"/>
+                            <TextBlock Grid.Row="6"  Text="Судьи:"/>
                             <TextBox Grid.Row="6" Grid.Column="1" x:Name="judges"/>
-                            <Button Grid.Row="7" Grid.ColumnSpan="3"  HorizontalAlignment="Center"  Margin="20" Content="Сохранить параметры" Height="30" x:Name="saveParametrsCompetition" Click="saveParametrsCompetition_Click"/>
+                            <Button Grid.Row="7" Grid.ColumnSpan="3"  HorizontalAlignment="Center"   Content="Сохранить параметры" Height="30" x:Name="saveParametrsCompetition" Click="saveParametrsCompetition_Click"/>
                         </Grid>
                         
                     </TabItem>
@@ -419,14 +416,14 @@
                             <TabControl Grid.Row="1">
                                 <TabItem Header="Мужчины-Левая">
                                     <local:TabItemTemplate x:Name="TabBoysLeftHand" DataContext="{Binding}"></local:TabItemTemplate>
-
-                                </TabItem>
-                                <TabItem Header="Мужчины-Правая">
-                                    <local:TabItemTemplate x:Name="TabBoysRighHand" DataContext="{Binding}"></local:TabItemTemplate>
                                 </TabItem>
                                 <TabItem Header="Женщины-Левая">
                                     <local:TabItemTemplate x:Name="TabGirlsLeftHand"  DataContext="{Binding}"></local:TabItemTemplate>
                                 </TabItem>
+                                <TabItem Header="Мужчины-Правая">
+                                    <local:TabItemTemplate x:Name="TabBoysRighHand" DataContext="{Binding}"></local:TabItemTemplate>
+                                </TabItem>
+                                
                                 <TabItem Header="Женщины-Правая">
                                     <local:TabItemTemplate x:Name="TabGirlsRighHand"  DataContext="{Binding}"></local:TabItemTemplate>
                                 </TabItem>
@@ -441,7 +438,11 @@
                             </Grid.RowDefinitions>
                             <Button HorizontalAlignment="Left" Content="Посчитать очки" Click="getResultsButton_Click"></Button>
                             <TabControl Grid.Row="1">
-                                <TabItem Header="Мужчины-Левая">
+                                <TabItem Header="Мужчины">
+                                     </TabItem>
+                                <TabItem Header="Женщины">
+                                    </TabItem>
+                                <!--<TabItem Header="Мужчины-Левая">
                                     <local1:ResultTemplate x:Name="TabResultBL"  DataContext="{Binding}"></local1:ResultTemplate>
                                 </TabItem>
                                 <TabItem Header="Мужчины-Правая">
@@ -452,7 +453,7 @@
                                 </TabItem>
                                 <TabItem Header="Женщины-Правая">
                                     <local1:ResultTemplate x:Name="TabResultGR"  DataContext="{Binding}"></local1:ResultTemplate>
-                                </TabItem>
+                                </TabItem>-->
                                 <!--<TabItem Header="Командные">
                                     <Grid Margin="0, 20, 0, 0" x:Name="ComandScore" DataContext="{Binding}">
                                         <Grid.RowDefinitions>

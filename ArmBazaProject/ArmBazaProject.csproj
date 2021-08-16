@@ -92,11 +92,8 @@
     <Compile Include="BDModels\Qualification.cs" />
     <Compile Include="BDModels\Region.cs" />
     <Compile Include="Entities\Сompetition.cs" />
-    <Compile Include="UserControlWindows\ResultLeft.xaml.cs">
-      <DependentUpon>ResultLeft.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlWindows\ResultTemplate.xaml.cs">
-      <DependentUpon>ResultTemplate.xaml</DependentUpon>
+    <Compile Include="UserControlWindows\ResultHandsTableTemplate.xaml.cs">
+      <DependentUpon>ResultHandsTableTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControlWindows\TabItemTemplate.xaml.cs">
       <DependentUpon>TabItemTemplate.xaml</DependentUpon>
@@ -111,9 +108,6 @@
     <Compile Include="BDModels\Member.cs" />
     <Compile Include="TableWindows\TeamWindow.xaml.cs">
       <DependentUpon>TeamWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlWindows\ResultTeble.xaml.cs">
-      <DependentUpon>ResultTeble.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\ToureViewModel.cs" />
@@ -134,11 +128,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControlWindows\ResultLeft.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControlWindows\ResultTemplate.xaml">
+    <Page Include="UserControlWindows\ResultHandsTableTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,10 +141,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TableWindows\TeamWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControlWindows\ResultTeble.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

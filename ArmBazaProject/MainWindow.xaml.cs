@@ -32,15 +32,17 @@ namespace ArmBazaProject
             #endregion
 
             #region прикрепление данных к листам из бд
+
             
 
             teamsList.ItemsSource = dataBase.Teams.Local.ToBindingList();
             competitorList.ItemsSource = dataBase.Members.Local.ToBindingList();
             #endregion
 
+            competitionVM = new CompetitionViewModel();
             ageCategoryCB.ItemsSource = competitionVM.categories;
-            categoriesGrid.ItemsSource = dataBaseModel.GetAllCategories();
             pointsCB.ItemsSource = competitionVM.points;
+            //pointsGrid = 
 
 
         }
@@ -295,7 +297,7 @@ namespace ArmBazaProject
 
         private void getResultsButton_Click(object sender, RoutedEventArgs e)
         {
-            TabResultBL.DataContext = null;
+            /*TabResultBL.DataContext = null;
             TabResultBR.DataContext = null;
             TabResultGL.DataContext = null;
             TabResultGR.DataContext = null;
@@ -306,7 +308,7 @@ namespace ArmBazaProject
             TabResultGL.DataContext = competitionVM.CompetitionLeftHand.CategoriesG;
             TabResultGR.DataContext = competitionVM.CompetitionRightHand.CategoriesG;
 
-            competitionVM.GetAllPoints();
+            competitionVM.GetAllPoints();*/
         }
 
         private void ColumnDefinition_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
@@ -316,7 +318,8 @@ namespace ArmBazaProject
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            competitionVM.SortAllMembers();
+            competitionVM.SortAllMembers(dataBaseModel.GetAllCategories("ж", competitionVM.CompetitionLeftHand.CategoryName),
+                dataBaseModel.GetAllCategories("м", competitionVM.CompetitionLeftHand.CategoryName));
 
             TabBoysLeftHand.DataContext = null;
             TabBoysRighHand.DataContext = null;
@@ -345,24 +348,23 @@ namespace ArmBazaProject
 
         private void saveParametrsCompetition_Click(object sender, RoutedEventArgs e)
         {
-            competitionVM = new CompetitionViewModel(ageCategoryCB.SelectedValue.ToString(), pointsCB.SelectedValue.ToString(),
-                competitionName.Text, competitionLocation.Text, competitionDate.DisplayDate, judges.Text, secr.Text);
             membersGrid.ItemsSource = competitionVM.AllMembers;
-            GenderComboBox.ItemsSource = competitionVM.CompetitionLeftHand.Genders;
-            HandComboBox.ItemsSource = competitionVM.CompetitionLeftHand.Hands;
+            GenderComboBox.ItemsSource = competitionVM.genders;
+            HandComboBox.ItemsSource = competitionVM.hands;
             QualificationComboBox.ItemsSource = competitionVM.DataBaseModel.GetAllQualifications();
             RegionComboBoxz.ItemsSource = competitionVM.DataBaseModel.GetAllRegions();
             TeamComboBox.ItemsSource = competitionVM.DataBaseModel.GetAllTeams();
             membersGrid.CellEditEnding += cellEditEnding;
 
-            //result = new ResultViewModel(competitionVM);
+            competitionVM.SetWeights(dataBaseModel.GetAllCategories("ж", ageCategoryCB.SelectedValue.ToString()),
+                dataBaseModel.GetAllCategories("м", ageCategoryCB.SelectedValue.ToString()));
+
+            competitionVM.CompetitionLeftHand.CategoryName = ageCategoryCB.SelectedValue.ToString();
+            competitionVM.CompetitionRightHand.CategoryName = ageCategoryCB.SelectedValue.ToString();
 
         }
 
-        private void pointsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
 
         private void saveButton(object sender, RoutedEventArgs e)
         {       
@@ -377,6 +379,18 @@ namespace ArmBazaProject
                     Application.Current.MainWindow = currentMainWindow; // do it early enough if the 'if' is entered
                     dlg.PrintTicket.PageOrientation = System.Printing.PageOrientation.Landscape;
             }
+        }
+
+        private void ageCategoryCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            categoriesGridGirls.ItemsSource = dataBaseModel.GetAllCategories("ж", ageCategoryCB.SelectedValue.ToString());
+            categoriesGridBoys.ItemsSource = dataBaseModel.GetAllCategories("м", ageCategoryCB.SelectedValue.ToString());
+            
+        }
+
+        private void pointsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            pointsGrid.ItemsSource = dataBaseModel.GetAllPoints(pointsCB.SelectedValue.ToString());
         }
     }
 }

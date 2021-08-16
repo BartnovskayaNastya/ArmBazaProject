@@ -94,23 +94,28 @@ namespace ArmBazaProject
 
         //}
 
-        //public int[] GetAllPoints()
-        //{
-        //    string[] names;
-        //    Region[] regions;
-        //    using (ApplicationContext context = new ApplicationContext())
-        //    {
-        //        regions = context.Regions.ToArray();
-        //        names = new string[regions.Length];
-        //        for (int i = 0; i < regions.Length; i++)
-        //        {
-        //            names[i] = regions[i].Name;
-        //        }
+        public List<Category> GetAllCategories(string gender, string categoryName)
+        {
+            List<Category> categories;
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                categories = context.Categories.Where(category => category.Name == categoryName && category.Gender == gender).ToList();     
+            }
+            
+            return categories;
+        }
 
-        //        return names;
-        //    }
+        public List<Points> GetAllPoints(string pointName)
+        {
+            List<Points> points;
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                points = context.Points.Where(point => point.Name == pointName).ToList();
+            }
 
-        //}
+            return points;
+
+        }
 
         public IEnumerable<MemberViewModel> GetAllMembersByParam(string param)
         {

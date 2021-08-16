@@ -1,22 +1,11 @@
-﻿using ArmBazaProject.Entities;
+﻿using ArmBazaProject.BDModels;
+using ArmBazaProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ArmBazaProject.Models
 {
-
-    public struct PointsData
-    {
-        public PointsData(int intPlace, int intPoints)
-        {
-            Place = intPlace;
-            Points = intPoints;
-        }
-
-        public int Place { get; private set; }
-        public int Points { get; private set; }
-    }
     public class Сompetition : NotifyableObject
     {
         private ObservableCollection<MemberViewModel> members;
@@ -25,33 +14,14 @@ namespace ArmBazaProject.Models
         private CategoryViewModel[] categoriesG;
         private CategoryViewModel[] categoriesB;
 
+        private int[] girlsWeights;
+        private int[] boysWeights;
 
-        public int[] girlsWeightsSTANDART = new int[6] { 50, 55, 60, 65, 70, 71};
-        public int[] boysWeightsSTANDART = new int[9] { 60, 65, 70, 75, 80, 85, 90, 100, 101 };
-        public int[] girlsWeightsSENIOR = new int[7] { 50, 55, 60, 65, 70, 80, 81 };
-        public int[] boysWeightsSENIOR = new int[11] { 55, 60, 65, 70, 75, 80, 85, 90, 100, 110, 111 };
-        public int[] girlsWeightsYOUTH21 = new int[6] { 50, 55, 60, 65, 70, 71 };
-        public int[] boysWeightsYOUTH21 = new int[9] { 55, 60, 65, 70, 75, 80, 85, 90, 91 };
-
-        private List<PointsData> pointsStudent = new List<PointsData>() { new PointsData(1, 36), new PointsData(2, 33),
-        new PointsData(3, 30), new PointsData(4, 27), new PointsData(5, 24), new PointsData(6, 21), new PointsData(7, 19),
-        new PointsData(8, 17), new PointsData(9, 15), new PointsData(10, 13),new PointsData(11, 11),new PointsData(12, 10),
-        new PointsData(13, 9), new PointsData(14, 8), new PointsData(15, 7),new PointsData(16, 6),new PointsData(17, 5),
-        new PointsData(18, 4), new PointsData(19, 3), new PointsData(20, 2),new PointsData(21, 1)};
-
-        private List<PointsData> pointsStandart = new List<PointsData>() { new PointsData(1, 25), new PointsData(2, 17),
-        new PointsData(3, 9), new PointsData(4, 5), new PointsData(5, 3), new PointsData(6, 2)};
-
-        public List<PointsData> pointsDatas = new List<PointsData>();
-
-        public int[] girlsWeights;
-        public int[] boysWeights;
-
-        private string[] genders = new string[] { "м", "ж" };
-        private string[] hands = new string[] { "Левая", "Правая", "Обе"};
+        private string[] girlsWeightsName;
+        private string[] boysWeightsName;
 
 
-        private string categotyName;
+        private string categoryName;
         private string name;
         private string location;
         private DateTime date;
@@ -59,15 +29,7 @@ namespace ArmBazaProject.Models
         private string secretarys;
 
 
-        public string[] Genders
-        {
-            get { return genders; }
-            set
-            {
-                genders = value;
-                OnPropertyChanged("Genders");
-            }
-        }
+        #region Properties
 
         public DateTime Date
         {
@@ -119,24 +81,55 @@ namespace ArmBazaProject.Models
 
         public string CategoryName
         {
-            get { return categotyName; }
+            get { return categoryName; }
             set
             {
-                categotyName = value;
+                categoryName = value;
                 OnPropertyChanged("CategoryName");
             }
         }
 
-
-        public string[] Hands
+        public string[] GirlsWeightsName
         {
-            get { return hands; }
+            get { return girlsWeightsName; }
             set
             {
-                hands = value;
-                OnPropertyChanged("Hands");
+                girlsWeightsName = value;
+                OnPropertyChanged("GirlsWeightsName");
             }
         }
+
+        public string[] BoysWeightsName
+        {
+            get { return boysWeightsName; }
+            set
+            {
+                boysWeightsName = value;
+                OnPropertyChanged("BoysWeightsName");
+            }
+        }
+
+        public int[] GirlsWeight
+        {
+            get { return girlsWeights; }
+            set
+            {
+                girlsWeights = value;
+                OnPropertyChanged("GirlsWeight");
+            }
+        }
+
+        public int[] BoysWeight
+        {
+            get { return boysWeights; }
+            set
+            {
+                boysWeights = value;
+                OnPropertyChanged("BoysWeight");
+            }
+        }
+
+
 
         public ObservableCollection<MemberViewModel> Members
         {
@@ -208,7 +201,7 @@ namespace ArmBazaProject.Models
             }
         }
 
-
+        #endregion
 
 
         public Сompetition()
@@ -216,41 +209,50 @@ namespace ArmBazaProject.Models
             members = new ObservableCollection<MemberViewModel>();
             membersGirls = new List<MemberViewModel>();
             membersBoys = new List<MemberViewModel>();
-            /*switch (name)
-            {
-                case "Senior":
-                    girlsWeights = girlsWeightsSENIOR;
-                    boysWeights = boysWeightsSENIOR;
-                    break;
-                case "Standart":
-                    girlsWeights = girlsWeightsSTANDART;
-                    boysWeights = boysWeightsSTANDART;
-                    break;
-                case "Youth":
-                    girlsWeights = girlsWeightsYOUTH21;
-                    boysWeights = boysWeightsYOUTH21;
-                    break;
-
-            }
-
-            switch (points)
-            {
-                case "Student":
-                    pointsDatas = pointsStudent;
-                    break;
-                case "Standart":
-                    pointsDatas = pointsStandart;
-                    break;
-
-            }
-            */
-            categoriesG = new CategoryViewModel[girlsWeights.Length];
-            categoriesB = new CategoryViewModel[boysWeights.Length];
-
-
-
-
         }
 
+
+        public void SetWeights(List<Category> categoryGirls, List<Category> categoryBoys)
+        {
+            girlsWeights = SetWeight(categoryGirls);
+            boysWeights = SetWeight(categoryBoys);
+
+            girlsWeightsName = SetWeightNames(categoryGirls);
+            boysWeightsName = SetWeightNames(categoryBoys);
+
+            categoriesG = new CategoryViewModel[girlsWeights.Length];
+            categoriesB = new CategoryViewModel[boysWeights.Length];
+        }
+
+
+        private int[] SetWeight(List<Category> categories)
+        {
+            int[]  someCategory = new int[categories.Count];
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                if (categories[i].Weight.EndsWith("+"))
+                {
+                    someCategory[i] = int.Parse(categories[i-1].Weight) + 1;
+                }
+                else
+                {
+                    someCategory[i] = int.Parse(categories[i].Weight);
+                }
+                
+            }
+            return someCategory;
+        }
+
+        private string[] SetWeightNames(List<Category> categories)
+        {
+            string[] someCategory = new string[categories.Count];
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                someCategory[i] = categories[i].Weight;
+            }
+            return someCategory;
+        }
     }
 }

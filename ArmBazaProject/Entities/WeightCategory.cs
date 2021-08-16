@@ -7,6 +7,7 @@ namespace ArmBazaProject
         private float weight;
         private string gender;
         private string hand;
+        private string weightName;
         
 
         public float CategoryWeight
@@ -19,7 +20,17 @@ namespace ArmBazaProject
             }
         }
 
-        
+        public string WeightName
+        {
+            get { return weightName; }
+            set
+            {
+                weightName = value;
+                OnPropertyChanged("WeightName");
+            }
+        }
+
+
 
         public string CategoryGender
         {
@@ -41,9 +52,10 @@ namespace ArmBazaProject
             }
         }
 
-        public WeightCategory(float weight)
+        public WeightCategory(float weight, string name)
         {
             this.weight = weight;
+            weightName = name;
         }
 
 

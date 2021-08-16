@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ArmBazaProject.BDModels;
 using ArmBazaProject.Models;
 
 namespace ArmBazaProject.ViewModels
@@ -16,6 +17,7 @@ namespace ArmBazaProject.ViewModels
         private ObservableCollection<MemberViewModel> allMembers;
         private DataBaseModel dataBaseModel;
         private MemberViewModel someMember;
+
 
         private string[] namesB = new string[] { "Саша", "Егор", "Ваня", "Артем",
             "Илья", "Миша", "Костя", "Игорь", "Захар","Борис", "Витя", "Вова", "Валера",
@@ -32,9 +34,9 @@ namespace ArmBazaProject.ViewModels
         private string[] secondNamesG = new string[] { "Барто", "Брежнева", "Авдеева", "Бабушкина",
             "Бородина", "Васильева", "Глухова", "Гарбузова", "Давыдова","Егорова", "Жилина", "Зайцева", "Казакова",
         "Карустина", "Козлова", "Лапина", "Леонова","Макеева", "Акулова", "Павлова", "Рубцова"};
-        private string[] genders = new string[] { "м", "ж" };
-        private string[] hands = new string[] { "Правая", "Левая", "Обе" };
-        public string[] points = new string[] { "Student", "Standart" };
+        public string[] genders = new string[] { "м", "ж" };
+        public string[] hands = new string[] { "Правая", "Левая", "Обе" };
+        public string[] points = new string[] { "STUDENTS", "STANDART" };
         public string[] categories = new string[] { "STANDART", "SENIOR", "YOUTH 21", "JUNIOR 18",
             "MASTER", "TOURNAMENT1", "TOURNAMENT2", "TOURNAMENT3" };
 
@@ -88,7 +90,7 @@ namespace ArmBazaProject.ViewModels
             someMember = new MemberViewModel();
             dataBaseModel = new DataBaseModel();
 
-            for (int i = 0; i < 300; i++)
+            for (int i = 0; i < 100; i++)
             {
                 MemberViewModel member = new MemberViewModel();
                 member.Member.Weight = random.Next(45, 110);
@@ -108,9 +110,7 @@ namespace ArmBazaProject.ViewModels
             }
         }
 
-
         #region Данные из БД
-
 
         public IEnumerable<MemberViewModel> GetInfoAboutMembersByParam(string param)
         {
@@ -119,7 +119,14 @@ namespace ArmBazaProject.ViewModels
 
         #endregion
 
-        
+
+        #region Сортировка данных
+        public void SetWeights(List<Category> categoryGirls, List<Category> categoryBoys)
+        {
+            CompetitionLeftHand.SetWeights(categoryGirls, categoryBoys);
+            CompetitionRightHand.SetWeights(categoryGirls, categoryBoys);
+        }
+
         private void SortByHand()
         {
             for(int i = 0; i < allMembers.Count; i++)
@@ -157,15 +164,15 @@ namespace ArmBazaProject.ViewModels
 
         }
 
-        private void SetGroupWeight(CategoryViewModel[] categories, int[] weights, List<MemberViewModel> members)
+        private void SetGroupWeight(CategoryViewModel[] categories, int[] weights, List<MemberViewModel> members, List<Category> category)
         {
 
             for (int i = 0; i < categories.Length; i++)
             {
-                categories[i] = new CategoryViewModel(weights[i]);
+                categories[i] = new CategoryViewModel(weights[i], category[i].Weight);
                 if (members.Count > 0)
                 {
-                    categories[i].Category.CategoryGender = members[0].Member.Gender;
+                    categories[i].WeightCategory.CategoryGender = members[0].Member.Gender;
                 }
 
             }
@@ -176,17 +183,17 @@ namespace ArmBazaProject.ViewModels
                 {
                     if (j != categories.Length - 1)
                     {
-                        if (members[k].Member.Weight <= categories[0].Category.CategoryWeight)
+                        if (members[k].Member.Weight <= categories[0].WeightCategory.CategoryWeight)
                         {
                             categories[0].AddMember(members[k]);
                             break;
                         }
-                        else if (members[k].Member.Weight > categories[j].Category.CategoryWeight && members[k].Member.Weight <= categories[j + 1].Category.CategoryWeight)
+                        else if (members[k].Member.Weight > categories[j].WeightCategory.CategoryWeight && members[k].Member.Weight <= categories[j + 1].WeightCategory.CategoryWeight)
                         {
                             categories[j + 1].AddMember(members[k]);
                         }
                     }
-                    else if (members[k].Member.Weight >= categories[j].Category.CategoryWeight)
+                    else if (members[k].Member.Weight >= categories[j].WeightCategory.CategoryWeight)
                     {
                         categories[j].AddMember(members[k]);
                     }
@@ -196,26 +203,27 @@ namespace ArmBazaProject.ViewModels
             }
         }
 
-        public void SortAllMembers()
+        public void SortAllMembers(List<Category> categoryGirls, List<Category> categoryBoys)
         {
             SortByHand();
             SortByGender(сompetitionLeftHand);
             SortByGender(сompetitionRightHand);
-            SetGroupWeight(сompetitionLeftHand.CategoriesG, сompetitionLeftHand.girlsWeights, сompetitionLeftHand.MembersGirls);
-            SetGroupWeight(сompetitionRightHand.CategoriesG, сompetitionRightHand.girlsWeights, сompetitionRightHand.MembersGirls);
-            SetGroupWeight(сompetitionLeftHand.CategoriesB, сompetitionLeftHand.boysWeights, сompetitionLeftHand.MembersBoys);
-            SetGroupWeight(сompetitionRightHand.CategoriesB, сompetitionRightHand.boysWeights, сompetitionRightHand.MembersBoys);
+            SetGroupWeight(сompetitionLeftHand.CategoriesG, сompetitionLeftHand.GirlsWeight, сompetitionLeftHand.MembersGirls, categoryGirls);
+            SetGroupWeight(сompetitionRightHand.CategoriesG, сompetitionRightHand.GirlsWeight, сompetitionRightHand.MembersGirls, categoryGirls);
+            SetGroupWeight(сompetitionLeftHand.CategoriesB, сompetitionLeftHand.BoysWeight, сompetitionLeftHand.MembersBoys, categoryBoys);
+            SetGroupWeight(сompetitionRightHand.CategoriesB, сompetitionRightHand.BoysWeight, сompetitionRightHand.MembersBoys, categoryBoys);
 
         }
 
+        #endregion
 
         public void GetAllPoints()
         {
-            GetPoints(CompetitionLeftHand);
-            GetPoints(CompetitionRightHand);
+            //GetPoints(CompetitionLeftHand);
+           //GetPoints(CompetitionRightHand);
         }
 
-        private void GetPoints(Сompetition competition)
+        /*private void GetPoints(Сompetition competition)
         {
             int counter = 0;
             for (int i = 0; i < competition.CategoriesB.Length; i++)
@@ -260,7 +268,7 @@ namespace ArmBazaProject.ViewModels
 
                 }
             }
-        }
+        }*/
 
     }
 }

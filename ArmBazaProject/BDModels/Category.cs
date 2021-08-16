@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArmBazaProject.BDModels
 {
-    class Category : NotifyableObject
+    public class Category : NotifyableObject
     {
         private string name;
         private string weight;

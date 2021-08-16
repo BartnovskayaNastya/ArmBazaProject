@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="ArmBazaProject.UserControlWindows.ResultHandsTableTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ArmBazaProject.UserControlWindows"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl ItemsSource="{Binding}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding WeightCategory.WeightName}">
+                    </Label>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ScrollViewer Grid.Row="1" x:Name="svT" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" CanContentScroll="False" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
+                        <Grid>
+                            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding}" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
+                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding Member.Team.Name}" />
+                                    <DataGridTextColumn  Header ="Вес" Binding="{Binding Member.Weight}" />
+                                    <DataGridTextColumn  Header ="Место" Binding="{Binding}" />
+                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding}" />
+                                    <DataGridTextColumn  Header ="Место" Binding="{Binding}" />
+                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding}" />
+                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding}" />
+                                    <DataGridTextColumn  Header ="Место" Binding="{Binding}" />
+                                </DataGrid.Columns>
+                                </DataGrid>
+                            <!--<Grid>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" CanContentScroll="False"  SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
+
+                                </ScrollViewer>
+                            </Grid>-->
+                        </Grid>
+                    </ScrollViewer>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+</UserControl>
