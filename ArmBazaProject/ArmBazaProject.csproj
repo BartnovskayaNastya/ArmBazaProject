@@ -81,6 +81,7 @@
     <Compile Include="BLModels\ApplicationContext.cs" />
     <Compile Include="Entities\NotifyableObject.cs" />
     <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\TeamModel.cs" />
     <Compile Include="Entities\Toure.cs" />
     <Compile Include="UserControlWindows\DataGridToure.xaml.cs">
       <DependentUpon>DataGridToure.xaml</DependentUpon>

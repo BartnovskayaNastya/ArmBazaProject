@@ -7,14 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0.5*"/>
-        </Grid.ColumnDefinitions>
         <TabControl ItemsSource="{Binding}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
@@ -24,26 +16,32 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <ScrollViewer Grid.Row="1" x:Name="svT" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" CanContentScroll="False" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
+                    <ScrollViewer  x:Name="svT" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" CanContentScroll="False" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
                         <Grid>
-                            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ResultMembers}" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
-                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding Member.Team.Name}" />
+                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding TeamName}" />
                                     <DataGridTextColumn  Header ="Вес" Binding="{Binding Member.Weight}" />
-                                    <DataGridTextColumn  Header ="Место" Binding="{Binding}" />
-                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding}" />
-                                    <DataGridTextColumn  Header ="Место" Binding="{Binding}" />
-                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding}" />
-                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding}" />
-                                    <DataGridTextColumn  Header ="Место" Binding="{Binding}" />
+                                    <DataGridTextColumn  Header ="Место Левая" Binding="{Binding LeftHandPlace }" />
+                                    <DataGridTextColumn  Header ="Очки Левая" Binding="{Binding LeftHandScore}" />
+                                    <DataGridTextColumn  Header ="Место Правая" Binding="{Binding RightHandPlace}" />
+                                    <DataGridTextColumn  Header ="Очки Правая" Binding="{Binding RightHandScore}" />
+                                    <DataGridTextColumn  Header ="Очки Сумма" Binding="{Binding ResultHandScore}" />
+                                    <DataGridTextColumn  Header ="Место Сумма" Binding="{Binding ResultHandPlace}" />
                                 </DataGrid.Columns>
-                                </DataGrid>
-                            <!--<Grid>
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" CanContentScroll="False"  SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
-
-                                </ScrollViewer>
-                            </Grid>-->
+                            </DataGrid>
+                            <DataGrid Grid.Column ="1" AutoGenerateColumns="False" ItemsSource="{Binding Teams}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding Name}" />
+                                    <DataGridTextColumn  Header ="Место" Binding="{Binding Place}" />
+                                    <DataGridTextColumn  Header ="Очки" Binding="{Binding Score}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
                     </ScrollViewer>
                 </DataTemplate>

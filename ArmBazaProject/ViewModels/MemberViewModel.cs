@@ -17,6 +17,19 @@ namespace ArmBazaProject
         private int loseCounter;
         private int score;
 
+        public bool isRightHand;
+        public bool isLeftHand;
+
+        //resultData
+        private int leftHandScore;
+        private int rightHandScore;
+        private int resultHandScore;
+
+        private int rightHandPlace;
+        private int leftHandPlace;
+        private int resultHandPlace;
+
+
 
         public object Clone()
         {
@@ -30,7 +43,17 @@ namespace ArmBazaProject
                 RegionName = RegionName,
                 Place = Place,
                 Hand = Hand,
-                LoseCounter = LoseCounter
+                LoseCounter = LoseCounter,
+                Score = Score,
+                isLeftHand = isLeftHand,
+                isRightHand = isRightHand,
+                LeftHandScore = LeftHandScore,
+                LeftHandPlace = LeftHandPlace,
+                RightHandScore = RightHandScore,
+                RightHandPlace = RightHandPlace,
+                ResultHandPlace = ResultHandPlace,
+                ResultHandScore = ResultHandScore
+                
             };
         }
 
@@ -44,6 +67,67 @@ namespace ArmBazaProject
                 OnPropertyChanged("Member");
             }
         }
+
+        public int RightHandPlace
+        {
+            get { return rightHandPlace; }
+            set
+            {
+                rightHandPlace = value;
+                OnPropertyChanged("RightHandPlace");
+            }
+        }
+
+        public int ResultHandPlace
+        {
+            get { return resultHandPlace; }
+            set
+            {
+                resultHandPlace = value;
+                OnPropertyChanged("ResultHandPlace");
+            }
+        }
+
+        public int LeftHandPlace
+        {
+            get { return leftHandPlace; }
+            set
+            {
+                leftHandPlace = value;
+                OnPropertyChanged("LeftHandPlace");
+            }
+        }
+
+        public int LeftHandScore
+        {
+            get { return leftHandScore; }
+            set
+            {
+                leftHandScore = value;
+                OnPropertyChanged("LeftHandScore");
+            }
+        }
+
+        public int RightHandScore
+        {
+            get { return rightHandScore; }
+            set
+            {
+                rightHandScore = value;
+                OnPropertyChanged("RightHandScore");
+            }
+        }
+
+        public int ResultHandScore
+        {
+            get { return resultHandScore; }
+            set
+            {
+                resultHandScore = value;
+                OnPropertyChanged("ResultHandScore");
+            }
+        }
+
 
         public int Score
         {

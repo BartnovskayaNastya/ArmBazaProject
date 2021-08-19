@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArmBazaProject.BDModels
 {
-    class Points : NotifyableObject
+    public class Points : NotifyableObject
     {
         private string name;
         private int place;

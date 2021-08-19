@@ -412,7 +412,7 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Button HorizontalAlignment="Left" Content="Обновить данные" Click="Button_Click_1"></Button>
+                            <Button HorizontalAlignment="Left" Content="Обновить данные" Click="Button_Click_1" Height="26" Margin="1,0,0,2" VerticalAlignment="Bottom"></Button>
                             <TabControl Grid.Row="1">
                                 <TabItem Header="Мужчины-Левая">
                                     <local:TabItemTemplate x:Name="TabBoysLeftHand" DataContext="{Binding}"></local:TabItemTemplate>
@@ -439,9 +439,11 @@
                             <Button HorizontalAlignment="Left" Content="Посчитать очки" Click="getResultsButton_Click"></Button>
                             <TabControl Grid.Row="1">
                                 <TabItem Header="Мужчины">
+                                    <local1:ResultHandsTableTemplate x:Name="resultTableBoys" DataContext="{Binding}"></local1:ResultHandsTableTemplate>
                                      </TabItem>
                                 <TabItem Header="Женщины">
-                                    </TabItem>
+                                    <local1:ResultHandsTableTemplate x:Name="resultTableGirls" DataContext="{Binding}"></local1:ResultHandsTableTemplate>
+                                </TabItem>
                                 <!--<TabItem Header="Мужчины-Левая">
                                     <local1:ResultTemplate x:Name="TabResultBL"  DataContext="{Binding}"></local1:ResultTemplate>
                                 </TabItem>

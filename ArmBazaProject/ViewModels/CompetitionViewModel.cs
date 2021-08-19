@@ -36,6 +36,7 @@ namespace ArmBazaProject.ViewModels
         "Карустина", "Козлова", "Лапина", "Леонова","Макеева", "Акулова", "Павлова", "Рубцова"};
         public string[] genders = new string[] { "м", "ж" };
         public string[] hands = new string[] { "Правая", "Левая", "Обе" };
+        public string[] teams = new string[] {};
         public string[] points = new string[] { "STUDENTS", "STANDART" };
         public string[] categories = new string[] { "STANDART", "SENIOR", "YOUTH 21", "JUNIOR 18",
             "MASTER", "TOURNAMENT1", "TOURNAMENT2", "TOURNAMENT3" };
@@ -90,7 +91,7 @@ namespace ArmBazaProject.ViewModels
             someMember = new MemberViewModel();
             dataBaseModel = new DataBaseModel();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 200; i++)
             {
                 MemberViewModel member = new MemberViewModel();
                 member.Member.Weight = random.Next(45, 110);
@@ -106,6 +107,7 @@ namespace ArmBazaProject.ViewModels
                     member.Member.FullName = namesG[random.Next(0, namesG.Length)] +
                         " " + secondNamesG[random.Next(0, secondNamesG.Length)];
                 }
+                member.TeamName = dataBaseModel.GetAllTeams()[random.Next(0,dataBaseModel.GetAllTeams().Length)];
                 allMembers.Add(member);
             }
         }
@@ -135,12 +137,16 @@ namespace ArmBazaProject.ViewModels
                 switch (allMembers[i].Hand)
                 {
                     case "Левая":
+                        someMember.isLeftHand = true;
                         сompetitionLeftHand.Members.Add(someMember);
                         break;
                     case "Правая":
+                        someMember.isRightHand = true;
                         сompetitionRightHand.Members.Add(someMember);
                         break;
                     case "Обе":
+                        someMember.isLeftHand = true;
+                        someMember.isRightHand = true;
                         сompetitionLeftHand.Members.Add(someMember);
                         someMember = (MemberViewModel)allMembers[i].Clone();
                         сompetitionRightHand.Members.Add(someMember);
@@ -208,67 +214,34 @@ namespace ArmBazaProject.ViewModels
             SortByHand();
             SortByGender(сompetitionLeftHand);
             SortByGender(сompetitionRightHand);
-            SetGroupWeight(сompetitionLeftHand.CategoriesG, сompetitionLeftHand.GirlsWeight, сompetitionLeftHand.MembersGirls, categoryGirls);
-            SetGroupWeight(сompetitionRightHand.CategoriesG, сompetitionRightHand.GirlsWeight, сompetitionRightHand.MembersGirls, categoryGirls);
-            SetGroupWeight(сompetitionLeftHand.CategoriesB, сompetitionLeftHand.BoysWeight, сompetitionLeftHand.MembersBoys, categoryBoys);
-            SetGroupWeight(сompetitionRightHand.CategoriesB, сompetitionRightHand.BoysWeight, сompetitionRightHand.MembersBoys, categoryBoys);
-
+            SetGroupWeight(сompetitionLeftHand.CategoriesG, сompetitionLeftHand.GirlsWeights, сompetitionLeftHand.MembersGirls, categoryGirls);
+            SetGroupWeight(сompetitionRightHand.CategoriesG, сompetitionRightHand.GirlsWeights, сompetitionRightHand.MembersGirls, categoryGirls);
+            SetGroupWeight(сompetitionLeftHand.CategoriesB, сompetitionLeftHand.BoysWeights, сompetitionLeftHand.MembersBoys, categoryBoys);
+            SetGroupWeight(сompetitionRightHand.CategoriesB, сompetitionRightHand.BoysWeights, сompetitionRightHand.MembersBoys, categoryBoys);
+            SortTeams(сompetitionLeftHand.CategoriesG);
+            SortTeams(сompetitionRightHand.CategoriesG);
+            SortTeams(сompetitionLeftHand.CategoriesB);
+            SortTeams(сompetitionRightHand.CategoriesB);
         }
+
 
         #endregion
 
-        public void GetAllPoints()
+        private void SortTeams(CategoryViewModel[] categories)
         {
-            //GetPoints(CompetitionLeftHand);
-           //GetPoints(CompetitionRightHand);
+            for (int i = 0; i < categories.Length; i++)
+            {
+                categories[i].Teams = new ObservableCollection<Entities.TeamModel>();
+                categories[i].SetTeams();
+            }
         }
 
-        /*private void GetPoints(Сompetition competition)
+        public void SetParameters(List<Points> pointsList, string categoryName)
         {
-            int counter = 0;
-            for (int i = 0; i < competition.CategoriesB.Length; i++)
-            {
-                for (int j = 0; j < competition.CategoriesB[i].PlaceMembers.Count; j++)
-                {
-                    for (int k = 0; k < competition.pointsDatas.Count; k++)
-                    {
-                        if (competition.CategoriesB[i].PlaceMembers[j].Place == competition.pointsDatas[k].Place)
-                        {
-                            competition.CategoriesB[i].PlaceMembers[j].Score = competition.pointsDatas[k].Points;
-                            counter++;
-                        }
-                        
-                    }
-                }
-
-                if (counter != competition.CategoriesB[i].PlaceMembers.Count)
-                {
-                    for (int k = counter - 1; k < competition.CategoriesB[i].PlaceMembers.Count; k++)
-                    {
-                        competition.CategoriesB[i].PlaceMembers[k].Score = competition.pointsDatas[competition.pointsDatas.Count - 1].Points;
-                    }
-                }
-            }
-
-            for (int i = 0; i < competition.CategoriesG.Length; i++)
-            {
-                for (int j = 0; j < competition.CategoriesG[i].PlaceMembers.Count; j++)
-                {
-                    for (int k = 0; k < competition.pointsDatas.Count; k++)
-                    {
-                        if (competition.CategoriesG[i].PlaceMembers[j].Place == competition.pointsDatas[k].Place)
-                        {
-                            competition.CategoriesG[i].PlaceMembers[j].Score = competition.pointsDatas[k].Points;
-                        }
-                        else
-                        {
-                            competition.CategoriesG[i].PlaceMembers[j].Score = 1;
-                        }
-                    }
-
-                }
-            }
-        }*/
-
+            CompetitionLeftHand.CategoryName = categoryName;
+            CompetitionRightHand.CategoryName = categoryName;
+            CompetitionLeftHand.SetPoints(pointsList);
+            CompetitionLeftHand.SetPoints(pointsList);
+        }
     }
 }

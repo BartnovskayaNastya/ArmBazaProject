@@ -172,13 +172,8 @@ namespace ArmBazaProject
                 {
                     names[i] = teams[i].Name;
                 }
-
                 return names;
             }
-            //using (ApplicationContext context = new ApplicationContext())
-            //{
-            //    return context.Teams.ToArray();
-            //}
         }
 
         public IEnumerable<Team> GetAllTeams(string region)

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ArmBazaProject.Entities;
 using ArmBazaProject.Models;
 using ArmBazaProject.ViewModels;
 
@@ -20,6 +21,7 @@ namespace ArmBazaProject
         bool isAall = false;
         bool isBall = false;
 
+
         private WeightCategory weightCategory;
 
         private ObservableCollection<ToureViewModel> toures;
@@ -32,11 +34,19 @@ namespace ArmBazaProject
         MemberViewModel someMemberSecond;
         MemberViewModel someMember;
 
+        private ObservableCollection<MemberViewModel> resultMembers;
+
         private ObservableCollection<MemberViewModel> allMembers;
         private ObservableCollection<MemberViewModel> placeMembers;
         private ObservableCollection<MemberViewModel> firstTourMembers;
         private ObservableCollection<MemberViewModel> semifinal;
         private ToureViewModel final;
+
+
+
+        private ObservableCollection<TeamModel> teams;
+
+        private ObservableCollection<TeamModel> resultTeams;
 
 
         #endregion
@@ -53,6 +63,7 @@ namespace ArmBazaProject
         public IDelegateCommand FinalCommandB { protected set; get; }
         public IDelegateCommand SemiFinalCommand { protected set; get; }
 
+
         public WeightCategory WeightCategory
         {
             get { return weightCategory; }
@@ -62,6 +73,32 @@ namespace ArmBazaProject
                 {
                     weightCategory = value;
                     OnPropertyChanged("WeightCategory");
+                }
+            }
+        }
+
+        public ObservableCollection<TeamModel> ResultTeams
+        {
+            get { return resultTeams; }
+            set
+            {
+                if (resultTeams != value)
+                {
+                    resultTeams = value;
+                    OnPropertyChanged("ResultTeams");
+                }
+            }
+        }
+
+        public ObservableCollection<TeamModel> Teams
+        {
+            get { return teams; }
+            set
+            {
+                if (teams != value)
+                {
+                    teams = value;
+                    OnPropertyChanged("Teams");
                 }
             }
         }
@@ -117,7 +154,20 @@ namespace ArmBazaProject
             }
         }
 
-      
+        public ObservableCollection<MemberViewModel> ResultMembers
+        {
+            get { return resultMembers; }
+            set
+            {
+                if (resultMembers != value)
+                {
+                    resultMembers = value;
+                    OnPropertyChanged("ResultMembers");
+                }
+            }
+        }
+
+
         public ObservableCollection<MemberViewModel> FirstToureMembers
         {
             get { return firstTourMembers; }
@@ -149,12 +199,17 @@ namespace ArmBazaProject
         public CategoryViewModel(float weight, string name)
         {
             weightCategory = new WeightCategory(weight, name);
+
             allMembers = new ObservableCollection<MemberViewModel>();
             placeMembers = new ObservableCollection<MemberViewModel>();
+            resultMembers = new ObservableCollection<MemberViewModel>();
+
             toures = new ObservableCollection<ToureViewModel>();
             firstTourMembers = new ObservableCollection<MemberViewModel>();
             final = new ToureViewModel();
             semifinal = new ObservableCollection<MemberViewModel>();
+
+            teams = new ObservableCollection<TeamModel>();
 
             StartToureCommand = new DelegateCommand(StartCommand);
             FirstToureCommand = new DelegateCommand(FirstCommand);
@@ -168,6 +223,20 @@ namespace ArmBazaProject
             
         }
 
+
+        public void SetTeams()
+        {
+            TeamModel team;
+            for (int i = 0; i < allMembers.Count; i++)
+            {
+                team = new TeamModel(allMembers[i].TeamName);
+                if (!CheckTeam(team))
+                {
+                    teams.Add(team);
+                }
+            }
+        }
+
         public void RandomDraw(object param)
         {
             MemberViewModel tmp;
@@ -179,6 +248,31 @@ namespace ArmBazaProject
                 firstTourMembers[j] = firstTourMembers[i];
                 firstTourMembers[i] = tmp;
             }
+        }
+
+        public bool CheckTeam(TeamModel teamToAdd)
+        {
+            bool isExist = false;
+            if(teams.Count > 0)
+            {
+                foreach (TeamModel team in teams)
+                {
+                    if (team.Name == teamToAdd.Name)
+                    {
+                        isExist = true;
+                        break;
+                    }
+                }
+            }
+            if (!isExist)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
 
         public void AddMember(MemberViewModel somemember)

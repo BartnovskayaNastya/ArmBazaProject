@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ArmBazaProject.ViewModels;
 using System.Collections.ObjectModel;
 using ArmBazaProject.Models;
+using ArmBazaProject.Entities;
 
 namespace ArmBazaProject
 {
@@ -17,6 +18,7 @@ namespace ArmBazaProject
         ApplicationContext dataBase;
         DataBaseModel dataBaseModel;
         CompetitionViewModel competitionVM;
+        ResultViewModel resultVM;
         
 
         public MainWindow()
@@ -42,7 +44,6 @@ namespace ArmBazaProject
             competitionVM = new CompetitionViewModel();
             ageCategoryCB.ItemsSource = competitionVM.categories;
             pointsCB.ItemsSource = competitionVM.points;
-            //pointsGrid = 
 
 
         }
@@ -280,35 +281,12 @@ namespace ArmBazaProject
             searchePanel.Clear();
         }
 
-        private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
-            ScrollViewer scrollviewer = sender as ScrollViewer;
-            if (e.Delta > 0)
-            {
-                scrollviewer.LineUp();
-            }
-            else
-            {
-                scrollviewer.LineDown();
-            }
-            e.Handled = true;
-        }
-
         private void getResultsButton_Click(object sender, RoutedEventArgs e)
         {
-            /*TabResultBL.DataContext = null;
-            TabResultBR.DataContext = null;
-            TabResultGL.DataContext = null;
-            TabResultGR.DataContext = null;
-
-            //турнирные
-            TabResultBL.DataContext = competitionVM.CompetitionLeftHand.CategoriesB;
-            TabResultBR.DataContext = competitionVM.CompetitionRightHand.CategoriesB;
-            TabResultGL.DataContext = competitionVM.CompetitionLeftHand.CategoriesG;
-            TabResultGR.DataContext = competitionVM.CompetitionRightHand.CategoriesG;
-
-            competitionVM.GetAllPoints();*/
+            resultVM = new ResultViewModel(competitionVM);
+            resultVM.GetResults();
+            resultTableBoys.DataContext = resultVM.ResultCategoryBoys;
+            resultTableGirls.DataContext = resultVM.ResultCategoryGirls;
         }
 
         private void ColumnDefinition_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
@@ -316,6 +294,7 @@ namespace ArmBazaProject
 
         }
 
+        //ТУРНИРНЫЕ ТАБЛИЦЫ
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             competitionVM.SortAllMembers(dataBaseModel.GetAllCategories("ж", competitionVM.CompetitionLeftHand.CategoryName),
@@ -359,8 +338,8 @@ namespace ArmBazaProject
             competitionVM.SetWeights(dataBaseModel.GetAllCategories("ж", ageCategoryCB.SelectedValue.ToString()),
                 dataBaseModel.GetAllCategories("м", ageCategoryCB.SelectedValue.ToString()));
 
-            competitionVM.CompetitionLeftHand.CategoryName = ageCategoryCB.SelectedValue.ToString();
-            competitionVM.CompetitionRightHand.CategoryName = ageCategoryCB.SelectedValue.ToString();
+            competitionVM.SetParameters(dataBaseModel.GetAllPoints(pointsCB.SelectedValue.ToString()),
+                ageCategoryCB.SelectedValue.ToString());
 
         }
 
@@ -378,7 +357,7 @@ namespace ArmBazaProject
                 {
                     Application.Current.MainWindow = currentMainWindow; // do it early enough if the 'if' is entered
                     dlg.PrintTicket.PageOrientation = System.Printing.PageOrientation.Landscape;
-            }
+                }
         }
 
         private void ageCategoryCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -391,6 +370,21 @@ namespace ArmBazaProject
         private void pointsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             pointsGrid.ItemsSource = dataBaseModel.GetAllPoints(pointsCB.SelectedValue.ToString());
+        }
+
+        private void sv_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+            ScrollViewer scrollviewer = sender as ScrollViewer;
+            if (e.Delta > 0)
+            {
+                scrollviewer.LineUp();
+            }
+            else
+            {
+                scrollviewer.LineDown();
+            }
+            e.Handled = true;
         }
     }
 }

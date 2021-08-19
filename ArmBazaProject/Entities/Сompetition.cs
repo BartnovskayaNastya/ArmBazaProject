@@ -17,9 +17,10 @@ namespace ArmBazaProject.Models
         private int[] girlsWeights;
         private int[] boysWeights;
 
+        private int[] points;
+
         private string[] girlsWeightsName;
         private string[] boysWeightsName;
-
 
         private string categoryName;
         private string name;
@@ -40,6 +41,17 @@ namespace ArmBazaProject.Models
                 OnPropertyChanged("Date");
             }
         }
+
+        public int[] Points
+        {
+            get { return points; }
+            set
+            {
+                points = value;
+                OnPropertyChanged("Points");
+            }
+        }
+
 
         public string Secretarys
         {
@@ -108,27 +120,6 @@ namespace ArmBazaProject.Models
                 OnPropertyChanged("BoysWeightsName");
             }
         }
-
-        public int[] GirlsWeight
-        {
-            get { return girlsWeights; }
-            set
-            {
-                girlsWeights = value;
-                OnPropertyChanged("GirlsWeight");
-            }
-        }
-
-        public int[] BoysWeight
-        {
-            get { return boysWeights; }
-            set
-            {
-                boysWeights = value;
-                OnPropertyChanged("BoysWeight");
-            }
-        }
-
 
 
         public ObservableCollection<MemberViewModel> Members
@@ -209,6 +200,16 @@ namespace ArmBazaProject.Models
             members = new ObservableCollection<MemberViewModel>();
             membersGirls = new List<MemberViewModel>();
             membersBoys = new List<MemberViewModel>();
+        }
+
+        public void SetPoints(List<Points> pointsBD)
+        {
+            points = new int[pointsBD.Count];
+            
+            for(int i = 0; i < pointsBD.Count; i++)
+            {
+                points[i] = pointsBD[i].Score;
+            }
         }
 
 
