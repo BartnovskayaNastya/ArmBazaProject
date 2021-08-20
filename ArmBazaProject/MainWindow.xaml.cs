@@ -386,5 +386,15 @@ namespace ArmBazaProject
             }
             e.Handled = true;
         }
+
+        private void getResultsProtocol_Click(object sender, RoutedEventArgs e)
+        {
+            resultVM.GetProtocolResults();
+
+            resultProtocolB.DataContext = resultVM.ResultCategoryBoys;
+            resultProtocolG.DataContext = resultVM.ResultCategoryGirls;
+
+            
+        }
     }
 }

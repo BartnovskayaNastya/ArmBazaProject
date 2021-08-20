@@ -108,6 +108,20 @@ namespace ArmBazaProject.ViewModels
                         " " + secondNamesG[random.Next(0, secondNamesG.Length)];
                 }
                 member.TeamName = dataBaseModel.GetAllTeams()[random.Next(0,dataBaseModel.GetAllTeams().Length)];
+                if (member.Hand == "Обе")
+                {
+                    member.IsSportTeamLeftHand = true;
+                    member.IsSportTeamRightHand = true;
+                }
+                else if(member.Hand == "Левая")
+                {
+                    member.IsSportTeamLeftHand = true;
+                }
+                else
+                {
+                    member.IsSportTeamRightHand = true;
+                }
+
                 allMembers.Add(member);
             }
         }

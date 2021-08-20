@@ -30,6 +30,15 @@ namespace ArmBazaProject
         private int resultHandPlace;
 
 
+        //sportTeam
+        private bool isSportTeamLeftHand;
+        private bool isSportTeamRightHand;
+        private int leftHandSTScore;
+        private int rightHandSTScore;
+        private string leftHandSTScoreVM;
+        private string rightHandSTScoreVM;
+
+
 
         public object Clone()
         {
@@ -52,7 +61,13 @@ namespace ArmBazaProject
                 RightHandScore = RightHandScore,
                 RightHandPlace = RightHandPlace,
                 ResultHandPlace = ResultHandPlace,
-                ResultHandScore = ResultHandScore
+                ResultHandScore = ResultHandScore,
+                IsSportTeamLeftHand = IsSportTeamLeftHand,
+                IsSportTeamRightHand = IsSportTeamRightHand,
+                RightHandSTScore = RightHandSTScore,
+                LeftHandSTScore = LeftHandSTScore,
+                LeftHandSTScoreVM = LeftHandSTScoreVM,
+                RightHandSTScoreVM = RightHandSTScoreVM
                 
             };
         }
@@ -68,6 +83,46 @@ namespace ArmBazaProject
             }
         }
 
+        public string LeftHandSTScoreVM
+        {
+            get { return leftHandSTScoreVM; }
+            set
+            {
+                leftHandSTScoreVM = value;
+                OnPropertyChanged("LeftHandSTScoreVM");
+            }
+        }
+
+        public string RightHandSTScoreVM
+        {
+            get { return rightHandSTScoreVM; }
+            set
+            {
+                rightHandSTScoreVM = value;
+                OnPropertyChanged("RightHandSTScoreVM");
+            }
+        }
+
+        public bool IsSportTeamLeftHand
+        {
+            get { return isSportTeamLeftHand; }
+            set
+            {
+                isSportTeamLeftHand = value;
+                OnPropertyChanged("IsSportTeamLeftHand");
+            }
+        }
+
+        public bool IsSportTeamRightHand
+        {
+            get { return isSportTeamRightHand; }
+            set
+            {
+                isSportTeamRightHand = value;
+                OnPropertyChanged("IsSportTeamRightHand");
+            }
+        }
+
         public int RightHandPlace
         {
             get { return rightHandPlace; }
@@ -75,6 +130,26 @@ namespace ArmBazaProject
             {
                 rightHandPlace = value;
                 OnPropertyChanged("RightHandPlace");
+            }
+        }
+
+        public int LeftHandSTScore
+        {
+            get { return leftHandSTScore; }
+            set
+            {
+                leftHandSTScore = value;
+                OnPropertyChanged("LeftHandSTScore");
+            }
+        }
+
+        public int RightHandSTScore
+        {
+            get { return rightHandSTScore; }
+            set
+            {
+                rightHandSTScore = value;
+                OnPropertyChanged("RightHandSTScore");
             }
         }
 

@@ -256,6 +256,20 @@
                                         <DataGridTextColumn 
                                 Header ="Имя" 
                                 Binding="{Binding Member.FullName}" />
+                                        <DataGridTemplateColumn Header="СК Правая" >
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsSportTeamRightHand, UpdateSourceTrigger=PropertyChanged}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="СК Левая" >
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsSportTeamLeftHand, UpdateSourceTrigger=PropertyChanged}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                         <DataGridComboBoxColumn 
                                 Header = "Квалификация" 
                                 x:Name="QualificationComboBox"
@@ -444,61 +458,27 @@
                                 <TabItem Header="Женщины">
                                     <local1:ResultHandsTableTemplate x:Name="resultTableGirls" DataContext="{Binding}"></local1:ResultHandsTableTemplate>
                                 </TabItem>
-                                <!--<TabItem Header="Мужчины-Левая">
-                                    <local1:ResultTemplate x:Name="TabResultBL"  DataContext="{Binding}"></local1:ResultTemplate>
-                                </TabItem>
-                                <TabItem Header="Мужчины-Правая">
-                                    <local1:ResultTemplate x:Name="TabResultBR"  DataContext="{Binding}"></local1:ResultTemplate>
-                                </TabItem>
-                                <TabItem Header="Женщины-Левая">
-                                    <local1:ResultTemplate x:Name="TabResultGL"  DataContext="{Binding}"></local1:ResultTemplate>
-                                </TabItem>
-                                <TabItem Header="Женщины-Правая">
-                                    <local1:ResultTemplate x:Name="TabResultGR"  DataContext="{Binding}"></local1:ResultTemplate>
-                                </TabItem>-->
-                                <!--<TabItem Header="Командные">
-                                    <Grid Margin="0, 20, 0, 0" x:Name="ComandScore" DataContext="{Binding}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel>
-                                            <TextBlock Text="Список команд"></TextBlock>
-                                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" >
-                                                <ListView ItemsSource="{Binding AllTeams}">
-                                                    <ListView.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <StackPanel >
-                                                                <TextBlock Text="{Binding Member.FullName}"/>
-                                                                <TextBlock Text="{Binding TeamName}"/>
-                                                                <TextBlock Text="{Binding Member.Weight}" />
-                                                            </StackPanel>
-                                                        </DataTemplate>
-                                                    </ListView.ItemTemplate>
-                                                </ListView>
-                                            </ScrollViewer>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Text="Левая рука"></TextBlock>
-                                            <ListView ItemsSource="{Binding PlaceMembers}">
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel>
-                                                            <TextBlock Text="{Binding Place}" />
-                                                            <TextBlock Text="{Binding Score}"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-                                        </StackPanel>
-                                    </Grid>
-                                </TabItem>-->
                             </TabControl>
                         </Grid>
 
+                    </TabItem>
+                    <TabItem Header="Сводный протокол">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Button HorizontalAlignment="Left" Content="Посчитать очки" Click="getResultsProtocol_Click"></Button>
+                            <TabControl Grid.Row="1">
+                                <TabItem Header="Мужчины">
+                                    <local1:SummaryProtocolTableTemplate x:Name="resultProtocolB" DataContext="{Binding}"></local1:SummaryProtocolTableTemplate>
+                                </TabItem>
+                                <TabItem Header="Женщины">
+                                    <local1:SummaryProtocolTableTemplate x:Name="resultProtocolG" DataContext="{Binding}"></local1:SummaryProtocolTableTemplate>
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                        
                     </TabItem>
                 </TabControl>
             </TabItem>

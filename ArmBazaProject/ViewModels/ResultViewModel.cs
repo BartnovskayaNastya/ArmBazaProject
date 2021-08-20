@@ -16,6 +16,8 @@ namespace ArmBazaProject.ViewModels
         CategoryViewModel[] resultCategoryGirls;
         CategoryViewModel[] resultCategoryBoys;
 
+        private int[] protocolPoints = new int[] { 25, 17, 9, 5, 3, 2 };
+
 
         #region свойства доступа
 
@@ -92,10 +94,16 @@ namespace ArmBazaProject.ViewModels
 
             GetResultTeam(resultCategoryBoys);
             GetResultTeam(resultCategoryGirls);
+        }
 
+        public void GetProtocolResults()
+        {
+            GetProtocolPoints(ResultCategoryGirls);
+            GetProtocolPoints(ResultCategoryBoys);
 
         }
 
+        #region hand results
 
         //назначение очков для левой и правой руки для каждого участника
         private void SetAllPointsForMembers(CategoryViewModel[] categoriesLeft, CategoryViewModel[] categoriesRight,
@@ -252,10 +260,6 @@ namespace ArmBazaProject.ViewModels
 
         }
 
-
-
-
-
         /// <summary>
         /// Team block
         /// </summary>
@@ -282,7 +286,6 @@ namespace ArmBazaProject.ViewModels
 
             SetPlaceTeam(categories);
         }
-
 
         //сортировка команд по очкам участников
         private void SortTeams(CategoryViewModel[] categories)
@@ -320,8 +323,6 @@ namespace ArmBazaProject.ViewModels
             }
         }
 
-
-
         private void GetCategotyTeams(CategoryViewModel[] categories, CategoryViewModel[] categoriesL, CategoryViewModel[] categoriesR)
         {
             TeamModel team;
@@ -354,6 +355,67 @@ namespace ArmBazaProject.ViewModels
                             }
                         }
                         
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        private void GetProtocolPoints(CategoryViewModel[] categories)
+        {
+            int place;
+            int pointsPlace = 0;
+            int placeLeft = 0;
+            int placeRight = 0;
+            for(int i = 0; i < categories.Length; i++)
+            {
+                for (int j = 0; j < categories[i].ResultMembers.Count; j++)
+                {
+                    for (int k = 0; k < protocolPoints.Length; k++)
+                    {
+                        if (categories[i].ResultMembers[j].IsSportTeamLeftHand)
+                        {
+                            place = categories[i].ResultMembers[j].LeftHandPlace;
+                            pointsPlace = k;
+                            pointsPlace++;
+                            if(place == pointsPlace)
+                            {
+                                placeLeft = protocolPoints[k];
+                            }
+                            if (place > 6)
+                            {
+                                placeLeft = 0;
+                            }
+
+                            categories[i].ResultMembers[j].LeftHandSTScore = placeLeft;
+                            categories[i].ResultMembers[j].LeftHandSTScoreVM = placeLeft.ToString();
+
+
+
+                        }
+                        if (categories[i].ResultMembers[j].IsSportTeamRightHand)
+                        {
+                            place = categories[i].ResultMembers[j].RightHandPlace;
+                            pointsPlace = k;
+                            pointsPlace++;
+                            if (place == pointsPlace)
+                            {
+                                placeRight = protocolPoints[k];
+                            }
+                            if (place > 6)
+                            {
+                                placeRight = 0;
+                            }
+
+                            categories[i].ResultMembers[j].RightHandSTScore = placeRight;
+                            categories[i].ResultMembers[j].RightHandSTScoreVM = placeRight.ToString();
+                        }
+                        if (!categories[i].ResultMembers[j].IsSportTeamRightHand && !categories[i].ResultMembers[j].IsSportTeamLeftHand)
+                        {
+                            categories[i].ResultMembers[j].RightHandSTScoreVM = "Л";
+                            categories[i].ResultMembers[j].LeftHandSTScoreVM = "Л";
+                        }
                     }
                 }
             }
