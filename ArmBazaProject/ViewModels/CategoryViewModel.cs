@@ -20,6 +20,8 @@ namespace ArmBazaProject
         int indexB;
         bool isAall = false;
         bool isBall = false;
+        bool isDone = false;
+        bool isDonisimo = false;
 
 
         private WeightCategory weightCategory;
@@ -210,6 +212,7 @@ namespace ArmBazaProject
             semifinal = new ObservableCollection<MemberViewModel>();
 
             teams = new ObservableCollection<TeamModel>();
+            resultTeams = new ObservableCollection<TeamModel>();
 
             StartToureCommand = new DelegateCommand(StartCommand);
             FirstToureCommand = new DelegateCommand(FirstCommand);
@@ -516,44 +519,193 @@ namespace ArmBazaProject
         private void ButtonClickToure(ToureViewModel toure)
         {
             int ind = 0;
-            if (toures[0].Toure.ToureMembersA.Count == 2 && toures.Count == 1 && toures[0].Toure.ToureMembersB.Count > 2)
+            
+            //3 участника
+            if (toures[0].Toure.ToureMembersA.Count == 2 && toures[0].Toure.ToureMembersB.Count == 0)
+            {
+                if (toures[0].Toure.ToureMembersA[0].IsWiner)
+                {
+                    someMemberFirst = new MemberViewModel();
+                    someMemberSecond = new MemberViewModel();
+                    someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersA[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersA[1].Clone();
+                    someMemberFirst.IsWiner  = false;
+                    someMemberSecond.IsWiner = false;
+
+                    final.Toure.ToureMembersA.Add(someMemberFirst);
+                    semifinal.Add(someMemberSecond);
+                }
+                else if (toures[0].Toure.ToureMembersA[1].IsWiner)
+                {
+                    someMemberFirst = new MemberViewModel();
+                    someMemberSecond = new MemberViewModel();
+                    someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersA[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersA[1].Clone();
+                    someMemberFirst.IsWiner = false;
+                    someMemberSecond.IsWiner = false;
+
+                    final.Toure.ToureMembersA.Add(someMemberSecond);
+                    semifinal.Add(someMemberFirst);
+                }
+            }
+            //4 участника
+            else if (toures[0].Toure.ToureMembersA.Count == 2 && toures[0].Toure.ToureMembersB.Count == 2 && allMembers.Count == 4)
             {
                 someMemberFirst = new MemberViewModel();
                 someMemberSecond = new MemberViewModel();
                 someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersA[0].Clone();
                 someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersA[1].Clone();
+
+
                 if (someMemberFirst.IsWiner)
                 {
                     someMemberFirst.IsWiner = false;
                     final.Toure.ToureMembersA.Add(someMemberFirst);
                     semifinal.Add(someMemberSecond);
 
+
                 }
-                else
+                else if (someMemberSecond.IsWiner)
                 {
                     someMemberSecond.IsWiner = false;
                     final.Toure.ToureMembersA.Add(someMemberSecond);
                     semifinal.Add(someMemberFirst);
                 }
-            }
-            if (toures.Count != 1)
-            {
 
-                if (((toures[toures.Count - 2].Toure.ToureMembersA.Count == 2 && toures[toures.Count - 1].Toure.ToureMembersA.Count == 0) || (toures[toures.Count - 1].Toure.ToureMembersA.Count == 2)) && (!isAall))
+                someMemberFirst = new MemberViewModel();
+                someMemberSecond = new MemberViewModel();
+                someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersB[0].Clone();
+                someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersB[1].Clone();
+
+                if (someMemberFirst.IsWiner)
                 {
-                    if (toures[toures.Count - 1].Toure.ToureMembersA.Count == 0)
-                    {
-                        ind = toures.Count - 2;
-                    }
-                    else if (toures[toures.Count - 1].Toure.ToureMembersA.Count == 2)
-                    {
-                        ind = toures.Count - 1;
-                    }
-                    isAall = true;
+                    someMemberFirst.IsWiner = false;
+                    semifinal.Add(someMemberFirst);
+                    someMemberSecond.Place = allMembers.Count - placeMembers.Count;
+                    placeMembers.Add(someMemberSecond);
+
+
+                }
+                else if (someMemberSecond.IsWiner)
+                {
+                    someMemberSecond.IsWiner = false;
+                    semifinal.Add(someMemberSecond);
+                    someMemberFirst.Place = allMembers.Count - placeMembers.Count;
+                    placeMembers.Add(someMemberFirst);
+                }
+
+            }
+            else if (allMembers.Count == 5)
+            {
+                
+                if(toures[0].Toure.ToureMembersA.Count == 2 && toures[0].Toure.ToureMembersB.Count == 2 && !isDone)
+                {
+                    isDone = true;
+                    toureToAdd = toures[toures.Count - 1];
+                    toureToAdd.buttonPressedEvent += ButtonClickToure;
+
                     someMemberFirst = new MemberViewModel();
                     someMemberSecond = new MemberViewModel();
-                    someMemberFirst = (MemberViewModel)toures[ind].Toure.ToureMembersA[0].Clone();
-                    someMemberSecond = (MemberViewModel)toures[ind].Toure.ToureMembersA[1].Clone();
+                    someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersA[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersA[1].Clone();
+
+
+                    if (someMemberFirst.IsWiner)
+                    {
+                        someMemberFirst.IsWiner = false;
+                        toureToAdd.Toure.ToureMembersA.Add(someMemberFirst);
+                        toureToAdd.Toure.ToureMembersB.Add(someMemberSecond);
+
+
+                    }
+                    else if (someMemberSecond.IsWiner)
+                    {
+                        someMemberSecond.IsWiner = false;
+                        toureToAdd.Toure.ToureMembersA.Add(someMemberSecond);
+                        toureToAdd.Toure.ToureMembersB.Add(someMemberFirst);
+                    }
+
+                    someMemberFirst = new MemberViewModel();
+                    someMemberSecond = new MemberViewModel();
+                    someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersB[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersB[1].Clone();
+
+                    if (someMemberFirst.IsWiner)
+                    {
+                        someMemberFirst.IsWiner = false;
+                        toureToAdd.Toure.ToureMembersB.Add(someMemberFirst);
+                        someMemberSecond.Place = allMembers.Count - placeMembers.Count;
+                        placeMembers.Add(someMemberSecond);
+
+
+                    }
+                    else if (someMemberSecond.IsWiner)
+                    {
+                        someMemberSecond.IsWiner = false;
+                        toureToAdd.Toure.ToureMembersB.Add(someMemberSecond);
+                        someMemberFirst.Place = allMembers.Count - placeMembers.Count;
+                        placeMembers.Add(someMemberFirst);
+                    }
+                    int name = toures.Count;
+                    toureToAdd.Name = name.ToString();
+                }
+                else if (!isDonisimo)
+                {
+                    isDonisimo = true;
+                    someMemberFirst = new MemberViewModel();
+                    someMemberSecond = new MemberViewModel();
+                    someMemberFirst = (MemberViewModel)toures[1].Toure.ToureMembersA[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[1].Toure.ToureMembersA[1].Clone();
+
+
+                    if (someMemberFirst.IsWiner)
+                    {
+                        someMemberFirst.IsWiner = false;
+                        final.Toure.ToureMembersA.Add(someMemberFirst);
+                        semifinal.Add(someMemberSecond);
+
+
+                    }
+                    else if (someMemberSecond.IsWiner)
+                    {
+                        someMemberSecond.IsWiner = false;
+                        final.Toure.ToureMembersA.Add(someMemberSecond);
+                        semifinal.Add(someMemberFirst);
+                    }
+
+                    someMemberFirst = new MemberViewModel();
+                    someMemberSecond = new MemberViewModel();
+                    someMemberFirst = (MemberViewModel)toures[1].Toure.ToureMembersB[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[1].Toure.ToureMembersB[1].Clone();
+
+                    if (someMemberFirst.IsWiner)
+                    {
+                        someMemberFirst.IsWiner = false;
+                        semifinal.Add(someMemberFirst);
+                        someMemberSecond.Place = allMembers.Count - placeMembers.Count;
+                        placeMembers.Add(someMemberSecond);
+
+
+                    }
+                    else if (someMemberSecond.IsWiner)
+                    {
+                        someMemberSecond.IsWiner = false;
+                        semifinal.Add(someMemberSecond);
+                        someMemberFirst.Place = allMembers.Count - placeMembers.Count;
+                        placeMembers.Add(someMemberFirst);
+                    }
+                }
+
+            }   
+            
+            else
+            {
+                if (toures[0].Toure.ToureMembersA.Count == 2 && toures.Count == 1 && toures[0].Toure.ToureMembersB.Count > 2)
+                {
+                    someMemberFirst = new MemberViewModel();
+                    someMemberSecond = new MemberViewModel();
+                    someMemberFirst = (MemberViewModel)toures[0].Toure.ToureMembersA[0].Clone();
+                    someMemberSecond = (MemberViewModel)toures[0].Toure.ToureMembersA[1].Clone();
                     if (someMemberFirst.IsWiner)
                     {
                         someMemberFirst.IsWiner = false;
@@ -567,42 +719,115 @@ namespace ArmBazaProject
                         final.Toure.ToureMembersA.Add(someMemberSecond);
                         semifinal.Add(someMemberFirst);
                     }
-
                 }
-
-                if ((toures[toures.Count - 2].Toure.ToureMembersB.Count == 2 && toures[toures.Count - 1].Toure.ToureMembersB.Count == 0) || (toures[toures.Count - 1].Toure.ToureMembersB.Count == 2))
+                if (toures.Count != 1)
                 {
-                    if (toures[toures.Count - 1].Toure.ToureMembersB.Count == 0)
+
+                    if (((toures[toures.Count - 2].Toure.ToureMembersA.Count == 2 && toures[toures.Count - 1].Toure.ToureMembersA.Count == 0) || (toures[toures.Count - 1].Toure.ToureMembersA.Count == 2)) && (!isAall))
                     {
-                        ind = toures.Count - 2;
+                        if (toures[toures.Count - 1].Toure.ToureMembersA.Count == 0)
+                        {
+                            ind = toures.Count - 2;
+                        }
+                        else if (toures[toures.Count - 1].Toure.ToureMembersA.Count == 2)
+                        {
+                            ind = toures.Count - 1;
+                        }
+                        isAall = true;
+                        someMemberFirst = new MemberViewModel();
+                        someMemberSecond = new MemberViewModel();
+                        someMemberFirst = (MemberViewModel)toures[ind].Toure.ToureMembersA[0].Clone();
+                        someMemberSecond = (MemberViewModel)toures[ind].Toure.ToureMembersA[1].Clone();
+                        if (someMemberFirst.IsWiner)
+                        {
+                            someMemberFirst.IsWiner = false;
+                            final.Toure.ToureMembersA.Add(someMemberFirst);
+                            semifinal.Add(someMemberSecond);
+
+                        }
+                        else
+                        {
+                            someMemberSecond.IsWiner = false;
+                            final.Toure.ToureMembersA.Add(someMemberSecond);
+                            semifinal.Add(someMemberFirst);
+                        }
+
                     }
-                    else if (toures[toures.Count - 1].Toure.ToureMembersB.Count == 2)
+
+                    if ((toures[toures.Count - 2].Toure.ToureMembersB.Count == 2 && toures[toures.Count - 1].Toure.ToureMembersB.Count == 0) || (toures[toures.Count - 1].Toure.ToureMembersB.Count == 2))
                     {
-                        ind = toures.Count - 1;
+                        if (toures[toures.Count - 1].Toure.ToureMembersB.Count == 0)
+                        {
+                            ind = toures.Count - 2;
+                        }
+                        else if (toures[toures.Count - 1].Toure.ToureMembersB.Count == 2)
+                        {
+                            ind = toures.Count - 1;
+                        }
+                        isBall = true;
+                        someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[0].Clone();
+                        if (someMember.IsWiner)
+                        {
+                            someMember.IsWiner = false;
+                            semifinal.Add(someMember);
+                            someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[1].Clone();
+                            someMember.Place = allMembers.Count - placeMembers.Count;
+                            placeMembers.Add(someMember);
+                        }
+                        else
+                        {
+                            someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[1].Clone();
+                            someMember.IsWiner = false;
+                            semifinal.Add(someMember);
+                            someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[0].Clone();
+                            someMember.Place = allMembers.Count - placeMembers.Count;
+                            placeMembers.Add((MemberViewModel)someMember.Clone());
+
+                        }
+
                     }
-                    isBall = true;
-                    someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[0].Clone();
-                    if (someMember.IsWiner)
+
+                    else if (toures[index].ifExtra)
                     {
-                        someMember.IsWiner = false;
-                        semifinal.Add(someMember);
-                        someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[1].Clone();
-                        someMember.Place = allMembers.Count - placeMembers.Count;
-                        placeMembers.Add(someMember);
+                        toures[index].ifExtra = false;
+                        SortToures(toures[toures.Count - 1], toures[index], isAall, isBall);
+                        if (toures[toures.Count - 1].Toure.CheckExtraA() || toures[toures.Count - 1].Toure.CheckExtraB())
+                        {
+                            reserveToureToAdd = new ToureViewModel();
+                            reserveToureToAdd.buttonPressedEvent += ButtonClickToure;
+                            ExtraToure(toures[toures.Count - 1], reserveToureToAdd);
+                            toures[toures.Count - 1].ifExtra = true;
+                            index = toures.Count - 1;
+                            toures.Add(reserveToureToAdd);
+                            reserveToureToAdd.Name = toures.Count.ToString();
+                        }
                     }
                     else
                     {
-                        someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[1].Clone();
-                        someMember.IsWiner = false;
-                        semifinal.Add(someMember);
-                        someMember = (MemberViewModel)toures[ind].Toure.ToureMembersB[0].Clone();
-                        someMember.Place = allMembers.Count - placeMembers.Count;
-                        placeMembers.Add((MemberViewModel)someMember.Clone());
+                        toureToAdd = new ToureViewModel();
+                        toureToAdd.buttonPressedEvent += ButtonClickToure;
+                        SortToures(toureToAdd, toure, isAall, isBall);
+                        if (toureToAdd.Toure.CheckExtraA() || toureToAdd.Toure.CheckExtraB())
+                        {
+                            reserveToureToAdd = new ToureViewModel();
+                            reserveToureToAdd.buttonPressedEvent += ButtonClickToure;
+                            ExtraToure(toureToAdd, reserveToureToAdd);
+                            toureToAdd.ifExtra = true;
+                            toures.Add(toureToAdd);
+                            index = toures.Count - 1;
+                            toureToAdd.Name = toures.Count.ToString();
+                            toures.Add(reserveToureToAdd);
+                            reserveToureToAdd.Name = toures.Count.ToString();
+                        }
+                        else
+                        {
+                            toures.Add(toureToAdd);
+                            toureToAdd.Name = toures.Count.ToString();
+                        }
 
                     }
 
                 }
-
                 else if (toures[index].ifExtra)
                 {
                     toures[index].ifExtra = false;
@@ -641,45 +866,6 @@ namespace ArmBazaProject
                         toureToAdd.Name = toures.Count.ToString();
                     }
 
-                }
-
-            }
-            else if (toures[index].ifExtra)
-            {
-                toures[index].ifExtra = false;
-                SortToures(toures[toures.Count - 1], toures[index], isAall, isBall);
-                if (toures[toures.Count - 1].Toure.CheckExtraA() || toures[toures.Count - 1].Toure.CheckExtraB())
-                {
-                    reserveToureToAdd = new ToureViewModel();
-                    reserveToureToAdd.buttonPressedEvent += ButtonClickToure;
-                    ExtraToure(toures[toures.Count - 1], reserveToureToAdd);
-                    toures[toures.Count - 1].ifExtra = true;
-                    index = toures.Count - 1;
-                    toures.Add(reserveToureToAdd);
-                    reserveToureToAdd.Name = toures.Count.ToString();
-                }
-            }
-            else
-            {
-                toureToAdd = new ToureViewModel();
-                toureToAdd.buttonPressedEvent += ButtonClickToure;
-                SortToures(toureToAdd, toure, isAall, isBall);
-                if (toureToAdd.Toure.CheckExtraA() || toureToAdd.Toure.CheckExtraB())
-                {
-                    reserveToureToAdd = new ToureViewModel();
-                    reserveToureToAdd.buttonPressedEvent += ButtonClickToure;
-                    ExtraToure(toureToAdd, reserveToureToAdd);
-                    toureToAdd.ifExtra = true;
-                    toures.Add(toureToAdd);
-                    index = toures.Count - 1;
-                    toureToAdd.Name = toures.Count.ToString();
-                    toures.Add(reserveToureToAdd);
-                    reserveToureToAdd.Name = toures.Count.ToString();
-                }
-                else
-                {
-                    toures.Add(toureToAdd);
-                    toureToAdd.Name = toures.Count.ToString();
                 }
 
             }

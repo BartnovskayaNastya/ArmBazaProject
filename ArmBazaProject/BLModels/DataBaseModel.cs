@@ -76,24 +76,6 @@ namespace ArmBazaProject
 
         }
 
-        //public int[] GetAllPoints()
-        //{
-        //    string[] names;
-        //    Region[] regions;
-        //    using (ApplicationContext context = new ApplicationContext())
-        //    {
-        //        regions = context.Regions.ToArray();
-        //        names = new string[regions.Length];
-        //        for (int i = 0; i < regions.Length; i++)
-        //        {
-        //            names[i] = regions[i].Name;
-        //        }
-
-        //        return names;
-        //    }
-
-        //}
-
         public List<Category> GetAllCategories(string gender, string categoryName)
         {
             List<Category> categories;
@@ -145,20 +127,6 @@ namespace ArmBazaProject
             
         }
 
-
-        public int GetTeamIdByName(string teamName)
-        {
-            using (ApplicationContext context = new ApplicationContext())
-            {
-                int result = 0;
-                foreach (var t in context.Teams)
-                {
-                    if (t.Name == teamName)
-                        result = t.Id;
-                }
-                return result;
-            }
-        }
 
         public string[] GetAllTeams()
         {

@@ -4,6 +4,7 @@ using ArmBazaProject.Entities;
 
 namespace ArmBazaProject
 {
+    [Serializable]
     public class Member : NotifyableObject, ICloneable
     {
         private string fullName;

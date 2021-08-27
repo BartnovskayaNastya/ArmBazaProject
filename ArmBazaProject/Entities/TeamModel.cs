@@ -10,7 +10,6 @@ namespace ArmBazaProject.Entities
         private int place;
         private int score;
 
-
         public string Name
         {
             get { return name; }

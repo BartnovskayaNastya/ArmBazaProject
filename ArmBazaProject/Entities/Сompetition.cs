@@ -14,8 +14,8 @@ namespace ArmBazaProject.Models
         private CategoryViewModel[] categoriesG;
         private CategoryViewModel[] categoriesB;
 
-        private int[] girlsWeights;
-        private int[] boysWeights;
+        private float[] girlsWeights;
+        private float[] boysWeights;
 
         private int[] points;
 
@@ -172,7 +172,7 @@ namespace ArmBazaProject.Models
             }
         }
 
-        public int[] GirlsWeights
+        public float[] GirlsWeights
         {
             get { return girlsWeights; }
             set
@@ -182,7 +182,7 @@ namespace ArmBazaProject.Models
             }
         }
 
-        public int[] BoysWeights
+        public float[] BoysWeights
         {
             get { return boysWeights; }
             set
@@ -202,7 +202,7 @@ namespace ArmBazaProject.Models
             membersBoys = new List<MemberViewModel>();
         }
 
-        public void SetPoints(List<Points> pointsBD)
+        public void SetPoints(List<BDModels.Points> pointsBD)
         {
             points = new int[pointsBD.Count];
             
@@ -226,9 +226,9 @@ namespace ArmBazaProject.Models
         }
 
 
-        private int[] SetWeight(List<Category> categories)
+        private float[] SetWeight(List<Category> categories)
         {
-            int[]  someCategory = new int[categories.Count];
+            float[]  someCategory = new float[categories.Count];
 
             for (int i = 0; i < categories.Count; i++)
             {

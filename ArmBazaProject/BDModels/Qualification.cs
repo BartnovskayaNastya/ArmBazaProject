@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using ArmBazaProject.Entities;
 using ArmBazaProject.ViewModels;
+using System;
 
 namespace ArmBazaProject.Models
 {
+    [Serializable]
     public class Qualification : NotifyableObject
     {
         private string name;

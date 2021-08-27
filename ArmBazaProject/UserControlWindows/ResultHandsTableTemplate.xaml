@@ -27,12 +27,12 @@
                                     <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
                                     <DataGridTextColumn  Header ="Команда" Binding="{Binding TeamName}" />
                                     <DataGridTextColumn  Header ="Вес" Binding="{Binding Member.Weight}" />
-                                    <DataGridTextColumn  Header ="Место Левая" Binding="{Binding LeftHandPlace }" />
-                                    <DataGridTextColumn  Header ="Очки Левая" Binding="{Binding LeftHandScore}" />
-                                    <DataGridTextColumn  Header ="Место Правая" Binding="{Binding RightHandPlace}" />
-                                    <DataGridTextColumn  Header ="Очки Правая" Binding="{Binding RightHandScore}" />
-                                    <DataGridTextColumn  Header ="Очки Сумма" Binding="{Binding ResultHandScore}" />
-                                    <DataGridTextColumn  Header ="Место Сумма" Binding="{Binding ResultHandPlace}" />
+                                    <DataGridTextColumn  Header ="Место Левая" Binding="{Binding LeftHandPlaceVM }" />
+                                    <DataGridTextColumn  Header ="Очки Левая" Binding="{Binding LeftHandScoreVM}" />
+                                    <DataGridTextColumn  Header ="Место Правая" Binding="{Binding RightHandPlaceVM}" />
+                                    <DataGridTextColumn  Header ="Очки Правая" Binding="{Binding RightHandScoreVM}" />
+                                    <DataGridTextColumn  Header ="Место Сумма" Binding="{Binding ResultHandScore}" />
+                                    <DataGridTextColumn  Header ="Место" Binding="{Binding ResultHandPlace}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DataGrid Grid.Column ="1" AutoGenerateColumns="False" ItemsSource="{Binding Teams}">

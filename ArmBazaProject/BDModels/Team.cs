@@ -1,9 +1,11 @@
 ﻿using ArmBazaProject.Models;
 using System.Collections.ObjectModel;
 using ArmBazaProject.Entities;
+using System;
 
 namespace ArmBazaProject
 {
+    [Serializable]
     public class Team : NotifyableObject
     {
         //int regionId;

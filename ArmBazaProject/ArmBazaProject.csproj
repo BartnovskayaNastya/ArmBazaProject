@@ -84,9 +84,15 @@
     <Compile Include="BDModels\Points.cs" />
     <Compile Include="BLModels\ApplicationContext.cs" />
     <Compile Include="Entities\NotifyableObject.cs" />
+    <Compile Include="Entities\Points.cs" />
+    <Compile Include="Entities\ProtocolTeam.cs" />
     <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\Serializator.cs" />
     <Compile Include="Entities\TeamModel.cs" />
     <Compile Include="Entities\Toure.cs" />
+    <Compile Include="UserControlWindows\DataGridCategory.xaml.cs">
+      <DependentUpon>DataGridCategory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControlWindows\DataGridToure.xaml.cs">
       <DependentUpon>DataGridToure.xaml</DependentUpon>
     </Compile>
@@ -99,6 +105,9 @@
     <Compile Include="Entities\Сompetition.cs" />
     <Compile Include="UserControlWindows\ResultHandsTableTemplate.xaml.cs">
       <DependentUpon>ResultHandsTableTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlWindows\SummaryProtocolSK.xaml.cs">
+      <DependentUpon>SummaryProtocolSK.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControlWindows\SummaryProtocolTableTemplate.xaml.cs">
       <DependentUpon>SummaryProtocolTableTemplate.xaml</DependentUpon>
@@ -120,6 +129,10 @@
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\ToureViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Page Include="UserControlWindows\DataGridCategory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControlWindows\DataGridToure.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +150,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControlWindows\ResultHandsTableTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControlWindows\SummaryProtocolSK.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

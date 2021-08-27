@@ -19,6 +19,8 @@ namespace ArmBazaProject
         DataBaseModel dataBaseModel;
         CompetitionViewModel competitionVM;
         ResultViewModel resultVM;
+
+        Serializator serializator;
         
 
         public MainWindow()
@@ -40,7 +42,7 @@ namespace ArmBazaProject
             teamsList.ItemsSource = dataBase.Teams.Local.ToBindingList();
             competitorList.ItemsSource = dataBase.Members.Local.ToBindingList();
             #endregion
-
+            serializator = new Serializator();
             competitionVM = new CompetitionViewModel();
             ageCategoryCB.ItemsSource = competitionVM.categories;
             pointsCB.ItemsSource = competitionVM.points;
@@ -335,11 +337,16 @@ namespace ArmBazaProject
             TeamComboBox.ItemsSource = competitionVM.DataBaseModel.GetAllTeams();
             membersGrid.CellEditEnding += cellEditEnding;
 
+            
+
             competitionVM.SetWeights(dataBaseModel.GetAllCategories("ж", ageCategoryCB.SelectedValue.ToString()),
                 dataBaseModel.GetAllCategories("м", ageCategoryCB.SelectedValue.ToString()));
 
-            competitionVM.SetParameters(dataBaseModel.GetAllPoints(pointsCB.SelectedValue.ToString()),
+            competitionVM.SetPoints(dataBaseModel.GetAllPoints(pointsCB.SelectedValue.ToString()),
                 ageCategoryCB.SelectedValue.ToString());
+            competitionVM.SetWeightsLimits(weightWomen.Text, weightMen.Text);
+
+
 
         }
 
@@ -395,6 +402,23 @@ namespace ArmBazaProject
             resultProtocolG.DataContext = resultVM.ResultCategoryGirls;
 
             
+        }
+
+        private void saveAllMembers_Click(object sender, RoutedEventArgs e)
+        {
+            serializator.SaveData(competitionVM.AllMembers);
+        }
+
+        private void loadAllMembers_Click(object sender, RoutedEventArgs e)
+        {
+            competitionVM.AllMembers = serializator.OpenData();
+            membersGrid.ItemsSource = competitionVM.AllMembers;
+        }
+
+        private void getTotalProtocol_Click(object sender, RoutedEventArgs e)
+        {
+           resultVM.GetTotalResults();
+           totalProtocol.DataContext = resultVM.ResultSummaryTeams;
         }
     }
 }

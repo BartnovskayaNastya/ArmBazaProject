@@ -1,9 +1,11 @@
 ﻿using System;
+using ArmBazaProject.Entities;
 using ArmBazaProject.ViewModels;
 
 namespace ArmBazaProject
 {
-    public class MemberViewModel : ViewModelBase, ICloneable
+    [Serializable]
+    public class MemberViewModel : NotifyableObject, ICloneable
     {
         private Member member;
         private bool isWiner = false;
@@ -25,9 +27,17 @@ namespace ArmBazaProject
         private int rightHandScore;
         private int resultHandScore;
 
+        public bool scoreZero = false;
+
+        private string rightHandScoreVM;
+        private string leftHandScoreVM;
+
         private int rightHandPlace;
         private int leftHandPlace;
         private int resultHandPlace;
+
+        private string rightHandPlaceVM;
+        private string leftHandPlaceVM;
 
 
         //sportTeam
@@ -37,6 +47,8 @@ namespace ArmBazaProject
         private int rightHandSTScore;
         private string leftHandSTScoreVM;
         private string rightHandSTScoreVM;
+
+        private int tempResultScoreHands;
 
 
 
@@ -67,8 +79,11 @@ namespace ArmBazaProject
                 RightHandSTScore = RightHandSTScore,
                 LeftHandSTScore = LeftHandSTScore,
                 LeftHandSTScoreVM = LeftHandSTScoreVM,
-                RightHandSTScoreVM = RightHandSTScoreVM
-                
+                RightHandSTScoreVM = RightHandSTScoreVM,
+                TempResultScoreHands = TempResultScoreHands,
+                LeftHandScoreVM = LeftHandScoreVM,
+                RightHandScoreVM = RightHandScoreVM
+
             };
         }
 
@@ -82,6 +97,59 @@ namespace ArmBazaProject
                 OnPropertyChanged("Member");
             }
         }
+
+        public string RightHandPlaceVM
+        {
+            get { return rightHandPlaceVM; }
+            set
+            {
+                rightHandPlaceVM = value;
+                OnPropertyChanged("RightHandPlaceVM");
+            }
+        }
+
+        public string LeftHandPlaceVM
+        {
+            get { return leftHandPlaceVM; }
+            set
+            {
+                leftHandPlaceVM = value;
+                OnPropertyChanged("LeftHandPlaceVM");
+            }
+        }
+
+        public string RightHandScoreVM
+        {
+            get { return rightHandScoreVM; }
+            set
+            {
+                rightHandScoreVM = value;
+                OnPropertyChanged("RightHandScoreVM");
+            }
+        }
+
+        public string LeftHandScoreVM
+        {
+            get { return leftHandScoreVM; }
+            set
+            {
+                leftHandScoreVM = value;
+                OnPropertyChanged("LeftHandScoreVM");
+            }
+        }
+
+        public int TempResultScoreHands
+        {
+            get { return tempResultScoreHands; }
+            set
+            {
+                tempResultScoreHands = value;
+                OnPropertyChanged("TempResultScoreHands");
+            }
+        }
+
+        
+
 
         public string LeftHandSTScoreVM
         {

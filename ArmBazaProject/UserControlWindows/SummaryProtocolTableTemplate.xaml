@@ -24,8 +24,8 @@
                             </Grid.ColumnDefinitions>
                             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ResultMembers}" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn  Header ="Место Правая" Binding="{Binding RightHandPlace}" />
-                                    <DataGridTextColumn  Header ="Место Левая" Binding="{Binding LeftHandPlace }" />
+                                    <DataGridTextColumn  Header ="Место Правая" Binding="{Binding RightHandPlaceVM}" />
+                                    <DataGridTextColumn  Header ="Место Левая" Binding="{Binding LeftHandPlaceVM}" />
                                     <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
                                     <DataGridTextColumn  Header ="Разряд" Binding="{Binding QualificationName}" />
                                     <DataGridTextColumn  Header ="Дата рождения" Binding="{Binding Member.DateOfBirth}" />

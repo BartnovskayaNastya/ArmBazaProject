@@ -60,6 +60,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
+
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -172,6 +173,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition/>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
@@ -221,7 +224,11 @@
                             <TextBox Grid.Row="5" Grid.Column="1" x:Name="secr"/>
                             <TextBlock Grid.Row="6"  Text="Судьи:"/>
                             <TextBox Grid.Row="6" Grid.Column="1" x:Name="judges"/>
-                            <Button Grid.Row="7" Grid.ColumnSpan="3"  HorizontalAlignment="Center"   Content="Сохранить параметры" Height="30" x:Name="saveParametrsCompetition" Click="saveParametrsCompetition_Click"/>
+                            <TextBlock Grid.Row="7"  Text="Допуск по весу МУЖЧИНЫ:"/>
+                            <TextBox Grid.Row="7" Grid.Column="1" x:Name="weightMen"/>
+                            <TextBlock Grid.Row="8"  Text="Допуск по весу ЖЕНЩИНЫ:"/>
+                            <TextBox Grid.Row="8" Grid.Column="1" x:Name="weightWomen"/>
+                            <Button Grid.Row="9" Grid.ColumnSpan="3"  HorizontalAlignment="Center"   Content="Сохранить параметры" Height="30" x:Name="saveParametrsCompetition" Click="saveParametrsCompetition_Click"/>
                         </Grid>
                         
                     </TabItem>
@@ -229,19 +236,14 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
+                                <RowDefinition Height="52"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <DataGrid PreviewKeyDown="dg_KeyDown"  SelectedItem="{Binding SelectedMember}" CellEditEnding="cellEditEnding" Name="membersGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="membersGrid_SelectionChanged">
+                                <DataGrid Grid.Row="0" PreviewKeyDown="dg_KeyDown"  SelectedItem="{Binding SelectedMember}" CellEditEnding="cellEditEnding" Name="membersGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="membersGrid_SelectionChanged">
                                     <DataGrid.Columns>
                                         <DataGridComboBoxColumn 
                                 Header = "Пол" 
@@ -302,7 +304,11 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
-                            <Grid Grid.Column="1">
+                            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button x:Name="saveAllMembers" Content="Сохранить данные" Width="180" Height="30" Margin="10" Click="saveAllMembers_Click"/>
+                                <Button x:Name="loadAllMembers" Content="Загрузить данные" Width="180" Height="30" Margin="10" Click="loadAllMembers_Click"/>
+                            </StackPanel>
+                            <Grid Grid.RowSpan="2" Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="50"/>
                                     <RowDefinition/>
@@ -444,7 +450,7 @@
                             </TabControl>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Результаты">
+                    <TabItem Header="Результаты двоеборья">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
@@ -462,7 +468,7 @@
                         </Grid>
 
                     </TabItem>
-                    <TabItem Header="Сводный протокол">
+                    <TabItem Header="Протокол">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
@@ -480,6 +486,19 @@
                         </Grid>
                         
                     </TabItem>
+                    <TabItem Header="Сводный протокол">
+                        <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button HorizontalAlignment="Left" Content="Посчитать очки" Click="getTotalProtocol_Click" Height="26" Margin="1,2,0,0" VerticalAlignment="Top"></Button>
+
+                            <local1:SummaryProtocolSK Grid.Row="1" x:Name="totalProtocol" DataContext="{Binding}"></local1:SummaryProtocolSK>
+                           
+                            
+    </Grid>
+    </TabItem>
                 </TabControl>
             </TabItem>
         </TabControl>
