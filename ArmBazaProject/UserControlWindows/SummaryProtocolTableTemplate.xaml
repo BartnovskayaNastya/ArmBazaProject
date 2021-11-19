@@ -29,7 +29,7 @@
                                     <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
                                     <DataGridTextColumn  Header ="Разряд" Binding="{Binding QualificationName}" />
                                     <DataGridTextColumn  Header ="Дата рождения" Binding="{Binding Member.DateOfBirth}" />
-                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding TeamName}" />
+                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding FullTeamName}" />
                                     <DataGridTextColumn  Header ="Очки Правая" Binding="{Binding RightHandSTScoreVM}" />
                                     <DataGridTextColumn  Header ="Очки Левая" Binding="{Binding LeftHandSTScoreVM}" />
                                     <DataGridTextColumn  Header ="Тренер" Binding="{Binding TrainerName}" />

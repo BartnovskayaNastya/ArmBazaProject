@@ -27,7 +27,7 @@ namespace ArmBazaProject.windows
             model = new DataBaseModel();
             changedTeam = team;
             this.DataContext = changedTeam;
-            regionCB.ItemsSource = model.GetAllRegions();
+           // regionCB.ItemsSource = model.GetAllRegions();
         }
 
         private void Accept_ClickTeam(object sender, RoutedEventArgs e)

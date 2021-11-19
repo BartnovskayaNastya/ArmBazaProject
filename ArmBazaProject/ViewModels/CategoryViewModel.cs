@@ -244,12 +244,12 @@ namespace ArmBazaProject
         {
             MemberViewModel tmp;
             int j;
-            for (int i = firstTourMembers.Count - 1; i >= 1; i--)
+            for (int i = allMembers.Count - 1; i >= 1; i--)
             {
                 j = random.Next(i + 1);
-                tmp = firstTourMembers[j];
-                firstTourMembers[j] = firstTourMembers[i];
-                firstTourMembers[i] = tmp;
+                tmp = allMembers[j];
+                allMembers[j] = allMembers[i];
+                allMembers[i] = tmp;
             }
         }
 
@@ -283,7 +283,7 @@ namespace ArmBazaProject
             bool isExist = false;
             foreach (MemberViewModel member in allMembers)
             {
-                if (somemember.Equals(member))
+                if (somemember.Member.FullName == member.Member.FullName)
                 {
                     isExist = true;
                     break;
@@ -332,7 +332,7 @@ namespace ArmBazaProject
                     firstTourMembers.RemoveAt(firstTourMembers.Count - 1);
                 }
                 toures.Add(toure);
-                toure.Name = toures.Count.ToString();
+                toure.Name = (toures.Count + 1).ToString();
             }
 
         }
@@ -883,6 +883,7 @@ namespace ArmBazaProject
             {
                 someMemberFirst.IsWiner = false;
                 toures[0].Toure.ToureMembersA.Add(someMemberFirst);
+                someMemberSecond.LoseCounter++;
                 semifinal.Add(someMemberSecond);
 
             }
@@ -890,7 +891,9 @@ namespace ArmBazaProject
             {
                 someMemberSecond.IsWiner = false;
                 toures[0].Toure.ToureMembersA.Add(someMemberSecond);
+                someMemberFirst.LoseCounter++;
                 semifinal.Add(someMemberFirst);
+
             }
         }
         //сортировка A тура

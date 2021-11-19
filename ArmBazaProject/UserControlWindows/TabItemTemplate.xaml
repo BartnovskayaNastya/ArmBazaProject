@@ -37,28 +37,28 @@
                             <StackPanel Orientation="Horizontal" Grid.Column="0">
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition />
                                         <RowDefinition Height="50"/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="50"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <ScrollViewer Grid.Column="0" Grid.RowSpan="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
-                                        <ListBox ItemsSource="{Binding AllMembers}">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBox Text="{Binding Member.FullName}" />
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
+
+                                    <ScrollViewer Grid.Column="0" Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" PanningMode="VerticalOnly" SnapsToDevicePixels="True" PreviewMouseWheel="svT_PreviewMouseWheel">
+                                        <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding AllMembers}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
                                     </ScrollViewer>
+                                    <Button Grid.Column="0" Grid.Row="1"  Content="Начать" Command="{Binding StartToureCommand}"/>
+                                    <Button Grid.Column="0" Grid.Row="2"  Content="Жеребьёвка" Command="{Binding DrawCommand}"/>
+
                                     <StackPanel  Grid.Column="1" Grid.RowSpan="3">
-                                        <Button Content="Начать" Command="{Binding StartToureCommand}"/>
                                         <local:DataGridToure  DataContext="{Binding FirstToureMembers}"></local:DataGridToure>
-                                        <Button Content="1 тур" Command="{Binding FirstToureCommand}"/>
-                                        <Button Content="Жеребьёвка" Command="{Binding DrawCommand}"/>
+                                        <Button Content="2 тур" Command="{Binding FirstToureCommand}"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid>
@@ -73,20 +73,20 @@
                                                 <DataTemplate>
                                                     <Grid>
                                                         <Grid.RowDefinitions>
+                                                            <RowDefinition Height="35"/>
+                                                            <RowDefinition />
+                                                            <RowDefinition Height="35"/>
+                                                            <RowDefinition />
                                                             <RowDefinition Height="50"/>
-                                                            <RowDefinition Height="35"/>
-                                                            <RowDefinition/>
-                                                            <RowDefinition Height="35"/>
-                                                            <RowDefinition/>
                                                         </Grid.RowDefinitions>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Button Content="{Binding Name}" Command="{Binding ToureCommand}"/>
-                                                        <TextBlock Margin="3" HorizontalAlignment="Center" Grid.Row="1" Text="Группа А"></TextBlock>
-                                                        <local:DataGridToure Grid.Row="2" DataContext="{Binding Toure.ToureMembersA}"></local:DataGridToure>
-                                                        <TextBlock Margin="3" HorizontalAlignment="Center" Grid.Row="3" Text="Группа Б"></TextBlock>
-                                                        <local:DataGridToure Grid.Row="4" DataContext="{Binding Toure.ToureMembersB}"></local:DataGridToure>
+                                                        <TextBlock Margin="3" HorizontalAlignment="Center" Text="Группа А"></TextBlock>
+                                                        <local:DataGridToure Grid.Row="1" DataContext="{Binding Toure.ToureMembersA}"></local:DataGridToure>
+                                                        <TextBlock Margin="3" HorizontalAlignment="Center" Grid.Row="2" Text="Группа Б"></TextBlock>
+                                                        <local:DataGridToure Grid.Row="3" DataContext="{Binding Toure.ToureMembersB}"></local:DataGridToure>
+                                                        <Button Content="ТУР" Grid.Row="4" Command="{Binding ToureCommand}"/>
                                                     </Grid>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

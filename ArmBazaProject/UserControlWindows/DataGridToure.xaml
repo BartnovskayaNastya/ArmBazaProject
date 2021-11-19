@@ -21,6 +21,18 @@
         </Style>
     </UserControl.Resources>
     <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding}" >
+        <DataGrid.RowStyle>
+            <Style TargetType="DataGridRow">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding State}" Value="State1">
+                        <Setter Property="Background" Value="#FFCB94EB"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding State}" Value="State2">
+                        <Setter Property="Background" Value="#FFA1FFC7"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </DataGrid.RowStyle>
         <DataGrid.Columns>
             <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
             <DataGridTemplateColumn Header="Победитель" >

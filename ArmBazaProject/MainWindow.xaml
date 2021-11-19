@@ -240,7 +240,7 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <!--<ColumnDefinition/>-->
                             </Grid.ColumnDefinitions>
                             <Grid>
                                 <DataGrid Grid.Row="0" PreviewKeyDown="dg_KeyDown"  SelectedItem="{Binding SelectedMember}" CellEditEnding="cellEditEnding" Name="membersGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" SelectionChanged="membersGrid_SelectionChanged">
@@ -291,10 +291,11 @@
                                 DisplayMemberPath="{Binding RegionName}"
                                  SelectedItemBinding="{Binding RegionName}"/>
                                         <DataGridComboBoxColumn 
-                                Header = "Команда" 
+                                Header = "Спорт. Коллектив" 
                                 x:Name="TeamComboBox"
                                  SelectedItemBinding="{Binding TeamName}"
                                 DisplayMemberPath="{Binding TeamName}"/>
+                                        <DataGridTextColumn Width="130" Header ="Команда" Binding="{Binding FullTeamName}"/>
                                         <DataGridTextColumn Width="130" Header ="Тренер" Binding="{Binding TrainerName}"/>
                                         <DataGridComboBoxColumn 
                                 Header = "Рука" 
@@ -308,7 +309,7 @@
                                 <Button x:Name="saveAllMembers" Content="Сохранить данные" Width="180" Height="30" Margin="10" Click="saveAllMembers_Click"/>
                                 <Button x:Name="loadAllMembers" Content="Загрузить данные" Width="180" Height="30" Margin="10" Click="loadAllMembers_Click"/>
                             </StackPanel>
-                            <Grid Grid.RowSpan="2" Grid.Column="1">
+                            <!--<Grid Grid.RowSpan="2" Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="50"/>
                                     <RowDefinition/>
@@ -345,7 +346,7 @@
                                     <Button x:Name="resetButton" Content="Сброс" Width="100" Height="30" Margin="10" Click="resetButton_Click"/>
 
                                 </StackPanel>
-                            </Grid>
+                            </Grid>-->
                         </Grid>
                     </TabItem>
                     <!--<TabItem Header="Информация">

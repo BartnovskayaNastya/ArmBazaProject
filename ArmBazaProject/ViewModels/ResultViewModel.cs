@@ -313,6 +313,36 @@ namespace ArmBazaProject.ViewModels
             }
         }
 
+        //сортировка по весу
+
+        private void SortByWeight(CategoryViewModel category)
+        {
+            int place = 0;
+            for (int i = 0; i < category.ResultMembers.Count; i++)
+            {
+                for (int j = 0; j < category.ResultMembers.Count; j++)
+                {
+                    if(i != j)
+                    {
+                        if(((category.ResultMembers[i].LeftHandPlace == category.ResultMembers[j].RightHandPlace) &&
+                            (category.ResultMembers[i].RightHandPlace == category.ResultMembers[j].LeftHandPlace)) ||
+                            ((category.ResultMembers[i].Member.Weight < category.ResultMembers[j].Member.Weight) &&
+                               (category.ResultMembers[i].ResultHandPlace > category.ResultMembers[j].ResultHandPlace)))
+                        {
+                            if((category.ResultMembers[i].Member.Weight > category.ResultMembers[j].Member.Weight) &&
+                                (category.ResultMembers[i].ResultHandPlace < category.ResultMembers[j].ResultHandPlace))
+                            {
+                                place = category.ResultMembers[i].ResultHandPlace;
+                                category.ResultMembers[i].ResultHandPlace = category.ResultMembers[j].ResultHandPlace;
+                                category.ResultMembers[j].ResultHandPlace = place;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
         //сортировка участников по возрастанию
         private void SortMembers(CategoryViewModel[] categories)
         {
@@ -361,6 +391,10 @@ namespace ArmBazaProject.ViewModels
                     place = categories[i].ResultMembers.Count - j;
                     categories[i].ResultMembers[j].ResultHandPlace = place;
                 }
+            }
+            for (int i = 0; i < categories.Length; i++)
+            {
+                SortByWeight(categories[i]);
             }
 
         }
@@ -451,7 +485,12 @@ namespace ArmBazaProject.ViewModels
                 for (int j = 0; j < categoriesL[i].Teams.Count; j++)
                 {
                     team = new TeamModel(categoriesL[i].Teams[j].Name);
-                    categories[i].Teams.Add(team);
+                    if(team.Name != "Лично")
+                    {
+                        categories[i].Teams.Add(team);
+                    }
+                     
+                    
                 }
             }
 
@@ -468,7 +507,10 @@ namespace ArmBazaProject.ViewModels
                                 if (!categories[k].CheckTeam(categoriesR[i].Teams[j]))
                                 {
                                     team = new TeamModel(categoriesR[i].Teams[j].Name);
-                                    categories[k].Teams.Add(team);
+                                    if (team.Name != "Лично")
+                                    {
+                                        categories[k].Teams.Add(team);
+                                    }
                                 }
                             }
                         }
@@ -476,6 +518,7 @@ namespace ArmBazaProject.ViewModels
                     }
                 }
             }
+
         }
 
         #endregion
@@ -635,73 +678,7 @@ namespace ArmBazaProject.ViewModels
                     }
                 }
             }
-                #region old
-                //int leftPoints = 0;
-                //int rightPoints = 0;
-                //Points pointsL;
-                //Points pointsR;
-                //ProtocolTeam protocolTeam;
-                //teamNames = dataBaseModel.GetAllTeams();
-                //for (int k = 0; k < teamNames.Length; k++)
-                //{
-                //    protocolTeam = new ProtocolTeam(teamNames[k]);
-                //    summaryTeams.Add(protocolTeam);
-                //}
-
-                //for (int i = 0; i < categories.Length; i++)
-                //{
-                //    for (int j = 0; j < categories[i].Teams.Count; j++)
-                //    {
-                //        for (int k = 0; k < summaryTeams.Count; k++)
-                //        {
-                //            if(categories[i].Teams[j].Name == summaryTeams[k].Name)
-                //            {
-                //                summaryTeams[k].Сategories.Add(categories[i].WeightCategory.WeightName);
-                //                pointsL = new Points();
-                //                pointsR = new Points();
-
-
-                //                for (int t = 0; t < categories[i].Teams[j].Members.Count; t++)
-                //                {
-                //                    if(categories[i].Teams[j].Members[t].IsSportTeamLeftHand && categories[i].Teams[j].Members[t].IsSportTeamRightHand)
-                //                    {
-                //                        leftPoints = categories[i].Teams[j].Members[t].LeftHandScore;
-                //                        rightPoints = categories[i].Teams[j].Members[t].RightHandScore;
-                //                        pointsL.points.Add(leftPoints);
-                //                        pointsR.points.Add(rightPoints);
-
-                //                        summaryTeams[k].PointsLeftHand.Add(pointsL);
-                //                        summaryTeams[k].PointsRightHand.Add(pointsR);
-                //                    }
-                //                    else if (categories[i].Teams[j].Members[t].IsSportTeamLeftHand &&
-                //                        !categories[i].Teams[j].Members[t].IsSportTeamRightHand)
-                //                    {
-                //                        leftPoints = categories[i].Teams[j].Members[t].LeftHandScore;
-                //                        rightPoints = 0;
-                //                        pointsL.points.Add(leftPoints);
-                //                        pointsR.points.Add(rightPoints);
-
-                //                        summaryTeams[k].PointsLeftHand.Add(pointsL);
-                //                        summaryTeams[k].PointsRightHand.Add(pointsR);
-                //                    }
-                //                    else if (!categories[i].Teams[j].Members[t].IsSportTeamLeftHand &&
-                //                        categories[i].Teams[j].Members[t].IsSportTeamRightHand)
-                //                    {
-                //                        leftPoints = 0;
-                //                        rightPoints = categories[i].Teams[j].Members[t].ResultHandScore;
-                //                        pointsL.points.Add(leftPoints);
-                //                        pointsR.points.Add(rightPoints);
-
-                //                        summaryTeams[k].PointsLeftHand.Add(pointsL);
-                //                        summaryTeams[k].PointsRightHand.Add(pointsR);
-                //                    }
-                //                }
-
-                //            }
-                //        }
-                //    }
-                //}
-                #endregion
+             
         }
 
         private void SetProtocolVMData(ObservableCollection<ProtocolTeam> summaryTeams)
@@ -778,48 +755,6 @@ namespace ArmBazaProject.ViewModels
                 place = summaryTeams.Count - i;
                 summaryTeams[i].TotalPlace = place;
             }
-            #region old
-            //int result;
-            //for (int k = 0; k < summaryTeams.Count; k++)
-            //{
-            //    for (int i = 0; i < summaryTeams[k].PointsLeftHand.Count; i++)
-            //    {
-            //        if(summaryTeams[k].PointsLeftHand[i].points.Count >= 2)
-            //        {
-            //            summaryTeams[k].ResultLeftHand += summaryTeams[k].PointsLeftHand[i].points[0] +
-            //                                          summaryTeams[k].PointsLeftHand[i].points[1];
-            //        }
-            //        else if (summaryTeams[k].PointsLeftHand[i].points.Count == 1)
-            //        {
-            //            summaryTeams[k].ResultLeftHand = summaryTeams[k].PointsLeftHand[i].points[0];
-            //        }
-            //        else
-            //        {
-            //            summaryTeams[k].ResultLeftHand = 0;
-            //        }
-
-            //    }
-
-            //    for (int i = 0; i < summaryTeams[k].PointsRightHand.Count; i++)
-            //    {
-            //        if (summaryTeams[k].PointsRightHand[i].points.Count >= 2)
-            //        {
-            //            summaryTeams[k].ResultRightHand += summaryTeams[k].PointsRightHand[i].points[0] +
-            //                                          summaryTeams[k].PointsRightHand[i].points[1];
-            //        }
-            //        else if (summaryTeams[k].PointsRightHand[i].points.Count == 1)
-            //        {
-            //            summaryTeams[k].ResultRightHand = summaryTeams[k].PointsRightHand[i].points[0];
-            //        }
-            //        else
-            //        {
-            //            summaryTeams[k].ResultRightHand = 0;
-            //        }
-            //    }
-
-            //    summaryTeams[k].TotalResult = summaryTeams[k].ResultLeftHand + summaryTeams[k].ResultRightHand;
-            //}
-            #endregion
         }
 
         private ObservableCollection<ProtocolTeam> CollectDataTeams(ObservableCollection<ProtocolTeam> summaryTeams1, ObservableCollection<ProtocolTeam> summaryTeams2)

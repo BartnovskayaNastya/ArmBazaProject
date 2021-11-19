@@ -19,13 +19,13 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Название команды" />
-        <TextBlock Text="ФИО тренера" Grid.Row="1" />
-        <TextBlock Text="Регион" Grid.Row="2" />
+        <!--<TextBlock Text="ФИО тренера" Grid.Row="1" />
+        <TextBlock Text="Регион" Grid.Row="2" />-->
 
         <TextBox Text="{Binding Name}" Grid.Column="1"  />
-        <TextBox Text="{Binding TrainerName}" Grid.Row="1" Grid.Column="2"  />
+        <!--<TextBox Text="{Binding TrainerName}" Grid.Row="1" Grid.Column="2"  />
         <ComboBox Name="regionCB" Grid.Column="2" Grid.Row="2" DisplayMemberPath="Name" SelectedValue="{Binding RegionId, Mode=TwoWay}" 
-          SelectedValuePath="Id"/>
+          SelectedValuePath="Id"/>-->
 
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
             <Button IsDefault="True" Click="Accept_ClickTeam" MinWidth="60" Margin="5">OK</Button>

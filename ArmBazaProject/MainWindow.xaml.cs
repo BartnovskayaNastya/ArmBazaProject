@@ -125,9 +125,13 @@ namespace ArmBazaProject
             if (teamWindow.ShowDialog() == true)
             {
                 Team team = teamWindow.changedTeam;
+                team.RegionId = 0;
+                team.TrainerName = "Name";
                 dataBase.Teams.Add(team);
                 dataBase.SaveChanges();
+
             }
+            TeamComboBox.ItemsSource = competitionVM.DataBaseModel.GetAllTeams();
         }
 
         private void EditTeam_Click(object sender, RoutedEventArgs e)
@@ -269,18 +273,18 @@ namespace ArmBazaProject
 
         private void findInDBButton_Click(object sender, RoutedEventArgs e)
         {
-            bdMembersList.ItemsSource = competitionVM.GetInfoAboutMembersByParam(searchePanel.Text);
+            //bdMembersList.ItemsSource = competitionVM.GetInfoAboutMembersByParam(searchePanel.Text);
         }
 
         private void addMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            MemberViewModel member = (MemberViewModel)bdMembersList.SelectedItem;
-            competitionVM.AllMembers.Add(member);
+            //MemberViewModel member = (MemberViewModel)bdMembersList.SelectedItem;
+            //competitionVM.AllMembers.Add(member);
         }
 
         private void resetButton_Click(object sender, RoutedEventArgs e)
         {
-            searchePanel.Clear();
+            //searchePanel.Clear();
         }
 
         private void getResultsButton_Click(object sender, RoutedEventArgs e)
@@ -337,15 +341,12 @@ namespace ArmBazaProject
             TeamComboBox.ItemsSource = competitionVM.DataBaseModel.GetAllTeams();
             membersGrid.CellEditEnding += cellEditEnding;
 
-            
-
             competitionVM.SetWeights(dataBaseModel.GetAllCategories("ж", ageCategoryCB.SelectedValue.ToString()),
                 dataBaseModel.GetAllCategories("м", ageCategoryCB.SelectedValue.ToString()));
 
             competitionVM.SetPoints(dataBaseModel.GetAllPoints(pointsCB.SelectedValue.ToString()),
                 ageCategoryCB.SelectedValue.ToString());
             competitionVM.SetWeightsLimits(weightWomen.Text, weightMen.Text);
-
 
 
         }

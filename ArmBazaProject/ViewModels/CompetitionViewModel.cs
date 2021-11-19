@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using ArmBazaProject.BDModels;
 using ArmBazaProject.Models;
@@ -18,8 +19,8 @@ namespace ArmBazaProject.ViewModels
         private DataBaseModel dataBaseModel;
         private MemberViewModel someMember;
 
-        public float manLimit;
-        public float womanLimit;
+        public double manLimit;
+        public double womanLimit;
 
 
 
@@ -43,7 +44,7 @@ namespace ArmBazaProject.ViewModels
         public string[] teams = new string[] {};
         public string[] points = new string[] { "STUDENTS", "STANDART" };
         public string[] categories = new string[] { "STANDART", "SENIOR", "YOUTH 21", "JUNIOR 18",
-            "MASTER", "TOURNAMENT1", "TOURNAMENT2", "TOURNAMENT3" };
+            "MASTER", "TOURNAMENT1", "TOURNAMENT2", "TOURNAMENT3", "CUP2021" };
 
         #region Свойства доступа
         public Сompetition CompetitionLeftHand
@@ -95,39 +96,39 @@ namespace ArmBazaProject.ViewModels
             someMember = new MemberViewModel();
             dataBaseModel = new DataBaseModel();
 
-            for (int i = 0; i < 200; i++)
-            {
-                MemberViewModel member = new MemberViewModel();
-                member.Member.Weight = random.Next(45, 110);
-                member.Member.Gender = genders[random.Next(0, 2)];
-                member.Hand = hands[random.Next(0, 3)];
-                if (member.Member.Gender == "м")
-                {
-                    member.Member.FullName = namesB[random.Next(0, namesB.Length)] +
-                        " " + secondNamesB[random.Next(0, secondNamesB.Length)];
-                }
-                else
-                {
-                    member.Member.FullName = namesG[random.Next(0, namesG.Length)] +
-                        " " + secondNamesG[random.Next(0, secondNamesG.Length)];
-                }
-                member.TeamName = dataBaseModel.GetAllTeams()[random.Next(0, dataBaseModel.GetAllTeams().Length)];
-                if (member.Hand == "Обе")
-                {
-                    member.IsSportTeamLeftHand = true;
-                    member.IsSportTeamRightHand = true;
-                }
-                else if (member.Hand == "Левая")
-                {
-                    member.IsSportTeamLeftHand = true;
-                }
-                else
-                {
-                    member.IsSportTeamRightHand = true;
-                }
+            //for (int i = 0; i < 200; i++)
+            //{
+            //    MemberViewModel member = new MemberViewModel();
+            //    member.Member.Weight = random.Next(45, 110);
+            //    member.Member.Gender = genders[random.Next(0, 2)];
+            //    member.Hand = hands[random.Next(0, 3)];
+            //    if (member.Member.Gender == "м")
+            //    {
+            //        member.Member.FullName = namesB[random.Next(0, namesB.Length)] +
+            //            " " + secondNamesB[random.Next(0, secondNamesB.Length)];
+            //    }
+            //    else
+            //    {
+            //        member.Member.FullName = namesG[random.Next(0, namesG.Length)] +
+            //            " " + secondNamesG[random.Next(0, secondNamesG.Length)];
+            //    }
+            //    member.TeamName = dataBaseModel.GetAllTeams()[random.Next(0, dataBaseModel.GetAllTeams().Length)];
+            //    if (member.Hand == "Обе")
+            //    {
+            //        member.IsSportTeamLeftHand = true;
+            //        member.IsSportTeamRightHand = true;
+            //    }
+            //    else if (member.Hand == "Левая")
+            //    {
+            //        member.IsSportTeamLeftHand = true;
+            //    }
+            //    else
+            //    {
+            //        member.IsSportTeamRightHand = true;
+            //    }
 
-                allMembers.Add(member);
-            }
+            //    allMembers.Add(member);
+            //}
         }
 
         #region Данные из БД
@@ -188,7 +189,7 @@ namespace ArmBazaProject.ViewModels
 
         }
 
-        private void SetGroupWeight(CategoryViewModel[] categories, float[] weights, List<MemberViewModel> members, List<Category> category, float limitWeight)
+        private void SetGroupWeight(CategoryViewModel[] categories, float[] weights, List<MemberViewModel> members, List<Category> category, double limitWeight)
         {
 
             for (int i = 0; i < categories.Length; i++)
@@ -264,13 +265,16 @@ namespace ArmBazaProject.ViewModels
 
         public void SetWeightsLimits(string weightG, string weightB)
         {
-            if(weightG == "")
+            CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            ci.NumberFormat.CurrencyDecimalSeparator = ".";
+            if (weightG == "")
             {
                 womanLimit = 0; 
             }
             else
             {
-                womanLimit = float.Parse(weightG);
+
+                womanLimit = double.Parse(weightG, NumberStyles.Any, ci);
             }
             if (weightB == "")
             {
@@ -278,7 +282,7 @@ namespace ArmBazaProject.ViewModels
             }
             else
             {
-                manLimit = float.Parse(weightB);
+                manLimit = double.Parse(weightB, NumberStyles.Any, ci);
             }
             
            

@@ -16,6 +16,7 @@ namespace ArmBazaProject
         private string regionName;
         private int place;
         private string hand;
+        private string fullTeamName;
         private int loseCounter;
         private int score;
 
@@ -65,6 +66,7 @@ namespace ArmBazaProject
                 Place = Place,
                 Hand = Hand,
                 LoseCounter = LoseCounter,
+                FullTeamName = FullTeamName,
                 Score = Score,
                 isLeftHand = isLeftHand,
                 isRightHand = isRightHand,
@@ -105,6 +107,16 @@ namespace ArmBazaProject
             {
                 rightHandPlaceVM = value;
                 OnPropertyChanged("RightHandPlaceVM");
+            }
+        }
+
+        public string FullTeamName
+        {
+            get { return fullTeamName; }
+            set
+            {
+                fullTeamName = value;
+                OnPropertyChanged("FullTeamName");
             }
         }
 

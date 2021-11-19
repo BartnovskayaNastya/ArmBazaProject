@@ -25,7 +25,7 @@
                             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ResultMembers}" >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn  Header ="Имя" Binding="{Binding Member.FullName}" />
-                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding TeamName}" />
+                                    <DataGridTextColumn  Header ="Команда" Binding="{Binding FullTeamName}" />
                                     <DataGridTextColumn  Header ="Вес" Binding="{Binding Member.Weight}" />
                                     <DataGridTextColumn  Header ="Место Левая" Binding="{Binding LeftHandPlaceVM }" />
                                     <DataGridTextColumn  Header ="Очки Левая" Binding="{Binding LeftHandScoreVM}" />
